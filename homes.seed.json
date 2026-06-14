@@ -1,0 +1,864 @@
+[
+  {
+    "id": "TH-01",
+    "name": "Skyline Modern",
+    "address": "418 Crestview Dr, Orinda CA",
+    "lot": "APN 268-110-04",
+    "stage": "Construction",
+    "sqft": 4200,
+    "beds": 5,
+    "baths": 4.5,
+    "start": "2025-09-12",
+    "targetList": "2026-08-01",
+    "land": 1250000,
+    "landClosing": 42000,
+    "soft": {
+      "Architecture & Design": 118000,
+      "Permits & Fees": 86000,
+      "Engineering": 54000,
+      "Financing / Carry": 140000
+    },
+    "budget": [
+      {
+        "div": "Sitework & Demo",
+        "budget": 185000,
+        "committed": 185000,
+        "actual": 171000
+      },
+      {
+        "div": "Foundation",
+        "budget": 240000,
+        "committed": 240000,
+        "actual": 236500
+      },
+      {
+        "div": "Framing",
+        "budget": 430000,
+        "committed": 430000,
+        "actual": 398000
+      },
+      {
+        "div": "Roofing",
+        "budget": 120000,
+        "committed": 120000,
+        "actual": 0
+      },
+      {
+        "div": "Mechanical / Plumbing / Electrical",
+        "budget": 520000,
+        "committed": 495000,
+        "actual": 210000
+      },
+      {
+        "div": "Windows & Doors",
+        "budget": 210000,
+        "committed": 210000,
+        "actual": 188000
+      },
+      {
+        "div": "Exterior Finishes",
+        "budget": 265000,
+        "committed": 120000,
+        "actual": 0
+      },
+      {
+        "div": "Interior Finishes",
+        "budget": 540000,
+        "committed": 90000,
+        "actual": 0
+      },
+      {
+        "div": "Landscape & Hardscape",
+        "budget": 175000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "General Conditions",
+        "budget": 160000,
+        "committed": 160000,
+        "actual": 96000
+      }
+    ],
+    "subs": [
+      {
+        "trade": "Concrete / Foundation",
+        "co": "Diablo Concrete Co.",
+        "value": 240000,
+        "status": "Complete"
+      },
+      {
+        "trade": "Framing",
+        "co": "Summit Framers Inc.",
+        "value": 430000,
+        "status": "In progress"
+      },
+      {
+        "trade": "Plumbing",
+        "co": "BayPro Plumbing",
+        "value": 165000,
+        "status": "In progress"
+      },
+      {
+        "trade": "Electrical",
+        "co": "Voltline Electric",
+        "value": 185000,
+        "status": "In progress"
+      },
+      {
+        "trade": "HVAC",
+        "co": "Comfort Systems NorCal",
+        "value": 170000,
+        "status": "Contracted"
+      },
+      {
+        "trade": "Roofing",
+        "co": "Apex Roofing",
+        "value": 120000,
+        "status": "Scheduled"
+      },
+      {
+        "trade": "Drywall",
+        "co": "—",
+        "value": 0,
+        "status": "Bidding"
+      }
+    ],
+    "materials": [
+      {
+        "po": "PO-1042",
+        "vendor": "ProBuild Lumber",
+        "item": "Framing package — Lot 1",
+        "amount": 142000,
+        "status": "Delivered"
+      },
+      {
+        "po": "PO-1051",
+        "vendor": "Marvin Windows",
+        "item": "Window & door package",
+        "amount": 188000,
+        "status": "Delivered"
+      },
+      {
+        "po": "PO-1066",
+        "vendor": "Ferguson",
+        "item": "Plumbing fixtures (rough)",
+        "amount": 54000,
+        "status": "Partial"
+      },
+      {
+        "po": "PO-1071",
+        "vendor": "Apex Roofing Supply",
+        "item": "Standing seam metal roof",
+        "amount": 78000,
+        "status": "Ordered"
+      }
+    ],
+    "inspections": [
+      {
+        "type": "Foundation / Footing",
+        "date": "2025-10-04",
+        "status": "Passed"
+      },
+      {
+        "type": "Underground Plumbing",
+        "date": "2025-10-18",
+        "status": "Passed"
+      },
+      {
+        "type": "Rough Framing",
+        "date": "2026-02-20",
+        "status": "Passed"
+      },
+      {
+        "type": "Rough MEP",
+        "date": "2026-04-15",
+        "status": "Scheduled"
+      },
+      {
+        "type": "Insulation",
+        "date": null,
+        "status": "Pending"
+      },
+      {
+        "type": "Final / CO",
+        "date": null,
+        "status": "Pending"
+      }
+    ],
+    "listing": {
+      "listPrice": 5850000,
+      "listDate": null,
+      "status": "Not listed",
+      "salePrice": null,
+      "closeDate": null,
+      "agent": "TBD"
+    },
+    "design": {
+      "architect": "Mira Studio Architects",
+      "designer": "Interiors by Lane",
+      "plansStatus": "Permitted",
+      "selectionsStatus": "In progress"
+    },
+    "selections": [
+      {
+        "category": "Kitchen",
+        "item": "Appliance package (Wolf / Sub-Zero)",
+        "allowance": 65000,
+        "actual": 78000,
+        "status": "Selected"
+      },
+      {
+        "category": "Flooring",
+        "item": "Wide-plank white oak",
+        "allowance": 48000,
+        "actual": 52000,
+        "status": "Selected"
+      },
+      {
+        "category": "Plumbing fixtures",
+        "item": "Brizo / Kohler",
+        "allowance": 38000,
+        "actual": 36000,
+        "status": "Selected"
+      },
+      {
+        "category": "Lighting",
+        "item": "Decorative package",
+        "allowance": 30000,
+        "actual": 0,
+        "status": "Open"
+      },
+      {
+        "category": "Tile / stone",
+        "item": "Primary bath slab + tile",
+        "allowance": 42000,
+        "actual": 49500,
+        "status": "Selected"
+      }
+    ],
+    "schedule": [
+      {
+        "name": "Foundation",
+        "start": "2025-09-20",
+        "end": "2025-10-15",
+        "status": "Complete"
+      },
+      {
+        "name": "Framing",
+        "start": "2025-11-01",
+        "end": "2026-02-15",
+        "status": "Complete"
+      },
+      {
+        "name": "Dry-in / MEP rough",
+        "start": "2026-02-16",
+        "end": "2026-04-30",
+        "status": "In progress"
+      },
+      {
+        "name": "Insulation & drywall",
+        "start": "2026-05-01",
+        "end": "2026-06-30",
+        "status": "Not started"
+      },
+      {
+        "name": "Interior finishes",
+        "start": "2026-07-01",
+        "end": "2026-10-15",
+        "status": "Not started"
+      },
+      {
+        "name": "Final & CO",
+        "start": "2026-10-16",
+        "end": "2026-11-15",
+        "status": "Not started"
+      }
+    ],
+    "changeOrders": [
+      {
+        "co": "CO-001",
+        "description": "Steel moment frame at great room",
+        "amount": 48000,
+        "status": "Approved",
+        "date": "2025-12-10"
+      },
+      {
+        "co": "CO-002",
+        "description": "Add wine cellar at basement",
+        "amount": 62000,
+        "status": "Approved",
+        "date": "2026-02-02"
+      },
+      {
+        "co": "CO-003",
+        "description": "Kitchen selection overage",
+        "amount": 13000,
+        "status": "Pending",
+        "date": "2026-04-10"
+      }
+    ],
+    "financing": {
+      "lender": "Bay Commercial Bank",
+      "loanAmount": 3200000,
+      "rate": 8.5
+    },
+    "draws": [
+      {
+        "num": "Draw 1",
+        "amount": 420000,
+        "date": "2025-10-20",
+        "status": "Funded"
+      },
+      {
+        "num": "Draw 2",
+        "amount": 610000,
+        "date": "2026-01-15",
+        "status": "Funded"
+      },
+      {
+        "num": "Draw 3",
+        "amount": 540000,
+        "date": "2026-03-20",
+        "status": "Funded"
+      },
+      {
+        "num": "Draw 4",
+        "amount": 500000,
+        "date": "2026-05-01",
+        "status": "Requested"
+      }
+    ],
+    "closeout": [],
+    "company_id": "linkgrid-homes"
+  },
+  {
+    "id": "TH-02",
+    "name": "Walnut Glen Estate",
+    "address": "71 Rancho Verde Ln, Lafayette CA",
+    "lot": "APN 244-051-12",
+    "stage": "Design & Permits",
+    "sqft": 5100,
+    "beds": 5,
+    "baths": 5.5,
+    "start": "2026-01-10",
+    "targetList": "2027-02-01",
+    "land": 1680000,
+    "landClosing": 51000,
+    "soft": {
+      "Architecture & Design": 165000,
+      "Permits & Fees": 0,
+      "Engineering": 72000,
+      "Financing / Carry": 95000
+    },
+    "budget": [
+      {
+        "div": "Sitework & Demo",
+        "budget": 260000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Foundation",
+        "budget": 310000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Framing",
+        "budget": 560000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Roofing",
+        "budget": 155000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Mechanical / Plumbing / Electrical",
+        "budget": 640000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Windows & Doors",
+        "budget": 285000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Exterior Finishes",
+        "budget": 340000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Interior Finishes",
+        "budget": 720000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Landscape & Hardscape",
+        "budget": 230000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "General Conditions",
+        "budget": 200000,
+        "committed": 0,
+        "actual": 0
+      }
+    ],
+    "subs": [
+      {
+        "trade": "Civil / Grading",
+        "co": "Terra Engineering",
+        "value": 95000,
+        "status": "Contracted"
+      },
+      {
+        "trade": "Concrete / Foundation",
+        "co": "—",
+        "value": 0,
+        "status": "Bidding"
+      },
+      {
+        "trade": "Framing",
+        "co": "—",
+        "value": 0,
+        "status": "Bidding"
+      }
+    ],
+    "materials": [],
+    "inspections": [
+      {
+        "type": "Planning Review",
+        "date": "2026-03-01",
+        "status": "Passed"
+      },
+      {
+        "type": "Building Permit",
+        "date": null,
+        "status": "In review"
+      }
+    ],
+    "listing": {
+      "listPrice": 7450000,
+      "listDate": null,
+      "status": "Not listed",
+      "salePrice": null,
+      "closeDate": null,
+      "agent": "TBD"
+    },
+    "design": {
+      "architect": "Atelier North",
+      "designer": "TBD",
+      "plansStatus": "In progress (DD)",
+      "selectionsStatus": "Open"
+    },
+    "selections": [
+      {
+        "category": "Kitchen",
+        "item": "Appliance allowance",
+        "allowance": 80000,
+        "actual": 0,
+        "status": "Open"
+      },
+      {
+        "category": "Flooring",
+        "item": "Allowance",
+        "allowance": 60000,
+        "actual": 0,
+        "status": "Open"
+      }
+    ],
+    "schedule": [
+      {
+        "name": "Design development",
+        "start": "2026-01-10",
+        "end": "2026-04-30",
+        "status": "In progress"
+      },
+      {
+        "name": "Construction documents",
+        "start": "2026-05-01",
+        "end": "2026-07-15",
+        "status": "Not started"
+      },
+      {
+        "name": "Permit",
+        "start": "2026-07-16",
+        "end": "2026-10-01",
+        "status": "Not started"
+      }
+    ],
+    "changeOrders": [],
+    "financing": {
+      "lender": "TBD",
+      "loanAmount": 0,
+      "rate": 0
+    },
+    "draws": [],
+    "closeout": [],
+    "company_id": "linkgrid-homes"
+  },
+  {
+    "id": "TH-03",
+    "name": "Cedar Ridge Farmhouse",
+    "address": "1205 Reliez Valley Rd, Lafayette CA",
+    "lot": "APN 166-220-19",
+    "stage": "Sold",
+    "sqft": 3600,
+    "beds": 4,
+    "baths": 3.5,
+    "start": "2024-03-01",
+    "targetList": "2025-06-01",
+    "land": 865000,
+    "landClosing": 29000,
+    "soft": {
+      "Architecture & Design": 84000,
+      "Permits & Fees": 68000,
+      "Engineering": 36000,
+      "Financing / Carry": 148000
+    },
+    "budget": [
+      {
+        "div": "Sitework & Demo",
+        "budget": 135000,
+        "committed": 135000,
+        "actual": 131000
+      },
+      {
+        "div": "Foundation",
+        "budget": 185000,
+        "committed": 185000,
+        "actual": 182000
+      },
+      {
+        "div": "Framing",
+        "budget": 330000,
+        "committed": 330000,
+        "actual": 341000
+      },
+      {
+        "div": "Roofing",
+        "budget": 95000,
+        "committed": 95000,
+        "actual": 93000
+      },
+      {
+        "div": "Mechanical / Plumbing / Electrical",
+        "budget": 400000,
+        "committed": 400000,
+        "actual": 412000
+      },
+      {
+        "div": "Windows & Doors",
+        "budget": 158000,
+        "committed": 158000,
+        "actual": 155000
+      },
+      {
+        "div": "Exterior Finishes",
+        "budget": 205000,
+        "committed": 205000,
+        "actual": 211000
+      },
+      {
+        "div": "Interior Finishes",
+        "budget": 420000,
+        "committed": 420000,
+        "actual": 438000
+      },
+      {
+        "div": "Landscape & Hardscape",
+        "budget": 128000,
+        "committed": 128000,
+        "actual": 133000
+      },
+      {
+        "div": "General Conditions",
+        "budget": 120000,
+        "committed": 120000,
+        "actual": 124000
+      }
+    ],
+    "subs": [
+      {
+        "trade": "All trades",
+        "co": "Closed out",
+        "value": 0,
+        "status": "Complete"
+      }
+    ],
+    "materials": [
+      {
+        "po": "—",
+        "vendor": "Various",
+        "item": "Project total (closed)",
+        "amount": 0,
+        "status": "Closed"
+      }
+    ],
+    "inspections": [
+      {
+        "type": "Final / CO",
+        "date": "2025-05-18",
+        "status": "Passed"
+      }
+    ],
+    "listing": {
+      "listPrice": 3995000,
+      "listDate": "2025-06-04",
+      "status": "Sold",
+      "salePrice": 4150000,
+      "closeDate": "2025-08-19",
+      "agent": "Compass — M. Reyes"
+    },
+    "design": {
+      "architect": "Mira Studio Architects",
+      "designer": "Interiors by Lane",
+      "plansStatus": "Complete",
+      "selectionsStatus": "Closed"
+    },
+    "selections": [
+      {
+        "category": "Kitchen",
+        "item": "Appliance package",
+        "allowance": 55000,
+        "actual": 58000,
+        "status": "Installed"
+      },
+      {
+        "category": "Flooring",
+        "item": "White oak",
+        "allowance": 40000,
+        "actual": 41500,
+        "status": "Installed"
+      }
+    ],
+    "schedule": [
+      {
+        "name": "Final & CO",
+        "start": "2025-05-01",
+        "end": "2025-05-18",
+        "status": "Complete"
+      }
+    ],
+    "changeOrders": [
+      {
+        "co": "CO-001",
+        "description": "Owner upgrade — primary bath",
+        "amount": 18000,
+        "status": "Approved",
+        "date": "2024-12-01"
+      }
+    ],
+    "financing": {
+      "lender": "Bay Commercial Bank",
+      "loanAmount": 2600000,
+      "rate": 8.25
+    },
+    "draws": [
+      {
+        "num": "Final draw",
+        "amount": 2600000,
+        "date": "2025-05-20",
+        "status": "Funded"
+      }
+    ],
+    "closeout": [
+      {
+        "item": "Certificate of Occupancy",
+        "status": "Complete",
+        "date": "2025-05-18"
+      },
+      {
+        "item": "Final lien releases",
+        "status": "Complete",
+        "date": "2025-06-01"
+      },
+      {
+        "item": "Warranties & manuals",
+        "status": "Complete",
+        "date": "2025-06-10"
+      },
+      {
+        "item": "As-built drawings",
+        "status": "Complete",
+        "date": "2025-06-15"
+      }
+    ],
+    "company_id": "linkgrid-homes"
+  },
+  {
+    "id": "TC-01",
+    "company_id": "tolercorp",
+    "name": "Walnut Creek Spec",
+    "address": "55 Ridgeline Ct, Walnut Creek CA",
+    "lot": "APN 140-220-07",
+    "stage": "Construction",
+    "sqft": 3900,
+    "beds": 4,
+    "baths": 3.5,
+    "start": "2026-01-15",
+    "targetList": "2026-11-01",
+    "land": 1050000,
+    "landClosing": 35000,
+    "soft": {
+      "Architecture & Design": 92000,
+      "Permits & Fees": 71000,
+      "Engineering": 44000,
+      "Financing / Carry": 120000
+    },
+    "budget": [
+      {
+        "div": "Sitework & Demo",
+        "budget": 160000,
+        "committed": 160000,
+        "actual": 150000
+      },
+      {
+        "div": "Foundation",
+        "budget": 210000,
+        "committed": 210000,
+        "actual": 205000
+      },
+      {
+        "div": "Framing",
+        "budget": 360000,
+        "committed": 360000,
+        "actual": 330000
+      },
+      {
+        "div": "Roofing",
+        "budget": 110000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "Mechanical / Plumbing / Electrical",
+        "budget": 470000,
+        "committed": 300000,
+        "actual": 150000
+      },
+      {
+        "div": "Windows & Doors",
+        "budget": 185000,
+        "committed": 185000,
+        "actual": 170000
+      },
+      {
+        "div": "Exterior Finishes",
+        "budget": 235000,
+        "committed": 80000,
+        "actual": 0
+      },
+      {
+        "div": "Interior Finishes",
+        "budget": 470000,
+        "committed": 40000,
+        "actual": 0
+      },
+      {
+        "div": "Landscape & Hardscape",
+        "budget": 150000,
+        "committed": 0,
+        "actual": 0
+      },
+      {
+        "div": "General Conditions",
+        "budget": 140000,
+        "committed": 140000,
+        "actual": 80000
+      }
+    ],
+    "subs": [
+      {
+        "trade": "Concrete / Foundation",
+        "co": "Diablo Concrete Co.",
+        "value": 210000,
+        "status": "Complete"
+      },
+      {
+        "trade": "Framing",
+        "co": "Summit Framers Inc.",
+        "value": 360000,
+        "status": "In progress"
+      }
+    ],
+    "materials": [
+      {
+        "po": "PO-2001",
+        "vendor": "ProBuild Lumber",
+        "item": "Framing package",
+        "amount": 120000,
+        "status": "Delivered"
+      }
+    ],
+    "inspections": [
+      {
+        "type": "Foundation / Footing",
+        "date": "2026-02-20",
+        "status": "Passed"
+      },
+      {
+        "type": "Rough Framing",
+        "date": "2026-05-01",
+        "status": "Scheduled"
+      }
+    ],
+    "design": {
+      "architect": "Mira Studio Architects",
+      "designer": "Interiors by Lane",
+      "plansStatus": "Permitted",
+      "selectionsStatus": "In progress"
+    },
+    "plans": [],
+    "selections": [
+      {
+        "category": "Kitchen",
+        "item": "Appliance package",
+        "allowance": 55000,
+        "actual": 0,
+        "status": "Open"
+      }
+    ],
+    "schedule": [],
+    "changeOrders": [
+      {
+        "co": "CO-001",
+        "description": "Add covered patio",
+        "amount": 24000,
+        "status": "Approved",
+        "date": "2026-03-01"
+      }
+    ],
+    "financing": {
+      "lender": "Bay Commercial Bank",
+      "loanAmount": 2700000,
+      "rate": 8.4
+    },
+    "draws": [
+      {
+        "num": "Draw 1",
+        "amount": 380000,
+        "date": "2026-02-25",
+        "status": "Funded"
+      }
+    ],
+    "closeout": [],
+    "listing": {
+      "listPrice": 4250000,
+      "listDate": null,
+      "status": "Not listed",
+      "salePrice": null,
+      "closeDate": null,
+      "agent": "TBD"
+    }
+  }
+]

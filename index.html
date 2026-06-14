@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LinkGrid Homes — Development Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FAF9F5; --panel:#FFFFFF; --panel2:#F5F4ED; --panel3:#FBFAF4;
+  --border:#E6E2D6; --border-soft:#EFEBDD;
+  --ink:#2A2722; --ink-2:#4D4738; --ink-3:#7A7460; --ink-4:#A8A28E;
+  --accent:#C96342; --accent-2:#A84F31;
+  --accent-bg:rgba(201,99,66,.08); --accent-line:rgba(201,99,66,.30);
+  --shadow-sm:0 1px 2px rgba(42,39,34,.05);
+  --shadow-md:0 4px 16px rgba(42,39,34,.06),0 1px 3px rgba(42,39,34,.04);
+  --shadow-lg:0 12px 40px rgba(42,39,34,.10);
+  --good:#5C8C42; --warn:#C99A2E; --bad:#C84840;
+  --good-bg:#EAF3DC; --good-border:#B8D194; --good-text:#2F5121;
+  --danger-bg:#FBE7E5; --danger-border:#E8B0AB; --danger-text:#7A2521;
+  --warn-bg:#FBF1D8; --warn-border:#D9BE74; --warn-text:#7A5A12;
+  --radius-sm:6px; --radius-md:10px; --radius-lg:14px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;min-height:100vh;font-family:var(--font);color:var(--ink);background:var(--bg);letter-spacing:0;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% -20%,var(--panel2) 0%,var(--bg) 60%);pointer-events:none;z-index:0;}
+button{font-family:var(--font);}
+a{color:var(--accent);}
+.hidden{display:none !important;}
+
+/* ---------- LOGIN ---------- */
+.login-wrap{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-card{background:var(--panel);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-lg);width:100%;max-width:420px;padding:34px 32px 30px;}
+.login-brand{display:flex;align-items:center;gap:14px;padding-bottom:18px;margin-bottom:20px;border-bottom:1px solid var(--border);}
+.login-mark{width:46px;height:46px;border-radius:12px;background:var(--accent-bg);border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;}
+.login-mark svg{width:26px;height:26px;}
+.login-brand-title{font-weight:800;font-size:17px;}
+.login-brand-sub{font-size:12px;color:var(--ink-3);margin-top:3px;font-weight:500;}
+.login-tag{display:inline-block;margin-top:6px;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.login-field{margin-bottom:14px;}
+.login-field label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:6px;}
+.login-field input{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;font-size:14px;color:var(--ink);}
+.login-field input:focus{outline:2px solid var(--accent-line);border-color:var(--accent-line);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:var(--radius-md);border:1px solid var(--accent-2);background:var(--accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;width:100%;transition:filter .15s ease,transform .15s ease;}
+.btn:hover{filter:brightness(1.05);}
+.btn:active{transform:translateY(1px);}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--border);width:auto;font-weight:600;padding:9px 14px;}
+.btn-ghost:hover{background:var(--panel3);border-color:var(--accent-line);}
+.btn-google{background:#fff;color:var(--ink-2);border:1px solid var(--border);margin-top:6px;}
+.btn-google:hover{background:var(--panel3);}
+.login-hint{margin-top:16px;font-size:11.5px;color:var(--ink-4);text-align:center;line-height:1.5;}
+.divider-or{display:flex;align-items:center;gap:10px;margin:16px 0 10px;color:var(--ink-4);font-size:11px;}
+.divider-or::before,.divider-or::after{content:"";flex:1;height:1px;background:var(--border);}
+
+/* ---------- APP SHELL ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(250,249,245,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.topbar-inner{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;}
+.tb-mark{width:34px;height:34px;border-radius:9px;background:var(--accent-bg);border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;}
+.tb-mark svg{width:20px;height:20px;}
+.tb-title{font-weight:800;font-size:15px;line-height:1.1;}
+.tb-sub{font-size:11px;color:var(--ink-3);}
+.tb-spacer{flex:1;}
+.tb-user{font-size:12px;color:var(--ink-2);text-align:right;line-height:1.3;}
+.tb-user b{display:block;font-size:12.5px;color:var(--ink);}
+.crumbs{max-width:1180px;margin:0 auto;padding:14px 20px 0;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);}
+.crumbs a{cursor:pointer;text-decoration:none;color:var(--ink-3);}
+.crumbs a:hover{color:var(--accent);}
+.crumbs .sep{color:var(--ink-4);}
+.stage{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:20px 20px 90px;}
+
+/* ---------- HUB ---------- */
+.hub-head{margin:14px 0 22px;}
+.hub-head h1{font-size:26px;font-weight:800;margin:0 0 6px;letter-spacing:-.01em;}
+.hub-head p{margin:0;color:var(--ink-3);font-size:14px;max-width:640px;}
+.section-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin:26px 0 12px;}
+.panels-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+.panel-btn{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) 24px;grid-template-rows:auto auto auto;column-gap:16px;row-gap:4px;align-items:flex-start;padding:22px 22px 20px;min-height:128px;background:var(--panel);border:1px solid var(--border);border-radius:16px;color:var(--ink);text-align:left;cursor:pointer;overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease;box-shadow:var(--shadow-sm);}
+.panel-btn:hover{transform:translateY(-2px);border-color:var(--accent-line);box-shadow:var(--shadow-md);background:var(--panel3);}
+.panel-icon{grid-column:1;grid-row:1/span 2;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:var(--accent-bg);border:1px solid var(--accent-line);color:var(--accent);}
+.panel-icon svg{width:22px;height:22px;}
+.panel-title{grid-column:2;grid-row:1;font-weight:700;font-size:18px;letter-spacing:-.005em;align-self:end;}
+.panel-sub{grid-column:2/4;grid-row:2;color:var(--ink-2);font-size:13.5px;line-height:1.45;}
+.panel-meta{grid-column:1/4;grid-row:3;display:flex;align-items:center;gap:8px;margin-top:12px;color:var(--ink-3);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;}
+.panel-meta::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.panel-arrow{grid-column:3;grid-row:1;color:var(--ink-3);justify-self:end;transition:transform .18s ease,color .18s ease;}
+.panel-btn:hover .panel-arrow{transform:translateX(4px);color:var(--accent);}
+
+/* ---------- KPI STRIP ---------- */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin-bottom:6px;}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm);}
+.kpi .k-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600;}
+.kpi .k-val{font-size:23px;font-weight:800;margin-top:6px;letter-spacing:-.01em;}
+.kpi .k-sub{font-size:11.5px;color:var(--ink-3);margin-top:3px;}
+.k-val.good{color:var(--good-text);} .k-val.bad{color:var(--danger-text);}
+
+/* ---------- PANEL / CARDS ---------- */
+.panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:6px 0 18px;flex-wrap:wrap;}
+.panel-head h2{font-size:22px;font-weight:800;margin:0;letter-spacing:-.01em;}
+.panel-head p{margin:5px 0 0;color:var(--ink-3);font-size:13.5px;}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:20px;margin-bottom:16px;}
+.card h3{margin:0 0 14px;font-size:15px;font-weight:700;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:760px){.grid-2{grid-template-columns:1fr;}}
+
+/* ---------- PIPELINE ---------- */
+.pipe{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;}
+.pipe-col{background:var(--panel2);border:1px solid var(--border-soft);border-radius:12px;padding:10px;min-width:172px;flex:0 0 auto;}
+.pipe-col h4{margin:2px 4px 10px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:700;display:flex;justify-content:space-between;}
+.pipe-col h4 span{color:var(--accent);}
+.home-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 12px;margin-bottom:9px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;}
+.home-card:hover{border-color:var(--accent-line);box-shadow:var(--shadow-sm);transform:translateY(-1px);}
+.home-card .hc-name{font-weight:700;font-size:13px;}
+.home-card .hc-addr{font-size:11px;color:var(--ink-3);margin-top:2px;}
+.home-card .hc-fin{font-size:11.5px;margin-top:8px;display:flex;justify-content:space-between;}
+.hc-fin b{font-weight:700;}
+
+/* ---------- TABLE ---------- */
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;background:var(--panel2);color:var(--ink-3);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border-bottom:1px solid var(--border);}
+td{padding:10px 12px;border-bottom:1px solid var(--border-soft);}
+tr:last-child td{border-bottom:none;}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+tfoot td{font-weight:700;border-top:2px solid var(--border);background:var(--panel3);}
+
+/* ---------- PILLS ---------- */
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid var(--border);background:var(--panel2);color:var(--ink-2);white-space:nowrap;}
+.pill.good{background:var(--good-bg);border-color:var(--good-border);color:var(--good-text);}
+.pill.warn{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-text);}
+.pill.bad{background:var(--danger-bg);border-color:var(--danger-border);color:var(--danger-text);}
+.pill.accent{background:var(--accent-bg);border-color:var(--accent-line);color:var(--accent-2);}
+.riskpill{cursor:help;transition:filter .15s,box-shadow .15s,transform .15s;}
+.riskpill:hover{filter:brightness(.95);box-shadow:0 2px 8px rgba(42,39,34,.16);transform:translateY(-1px);}
+.fb-fab{position:fixed;bottom:24px;right:24px;z-index:40;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:1px solid var(--accent-2);background:var(--accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg);}
+.fb-fab:hover{filter:brightness(1.05);}
+.fb-fab svg{width:18px;height:18px;}
+
+/* ---------- TABS ---------- */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin:4px 0 20px;flex-wrap:wrap;}
+.tab{padding:9px 14px;font-size:13px;font-weight:600;color:var(--ink-3);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.tab:hover{color:var(--ink);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ---------- BARS ---------- */
+.bar-track{height:8px;border-radius:6px;background:var(--panel2);overflow:hidden;border:1px solid var(--border-soft);}
+.bar-fill{height:100%;border-radius:6px;background:var(--accent);}
+.bar-fill.good{background:var(--good);} .bar-fill.warn{background:var(--warn);} .bar-fill.bad{background:var(--bad);}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-3);cursor:pointer;font-weight:600;margin-bottom:6px;background:none;border:none;padding:0;}
+.back-link:hover{color:var(--accent);}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.input,select{padding:9px 11px;border:1px solid var(--border);border-radius:var(--radius-md);background:#fff;font-size:13px;color:var(--ink);font-family:var(--font);}
+.input:focus,select:focus{outline:2px solid var(--accent-line);border-color:var(--accent-line);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;}
+.field-row label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:6px;}
+.field-row .input,.field-row select{width:100%;}
+.proforma-out{background:var(--panel3);border:1px dashed var(--accent-line);border-radius:12px;padding:18px;margin-top:8px;}
+.pf-line{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13.5px;}
+.pf-line:last-child{border-bottom:none;}
+.pf-line.total{font-weight:800;font-size:16px;border-bottom:none;padding-top:12px;}
+.muted{color:var(--ink-3);}
+.foot{text-align:center;color:var(--ink-4);font-size:11px;margin-top:40px;}
+.modal-back{position:fixed;inset:0;background:rgba(42,39,34,.45);display:none;align-items:center;justify-content:center;z-index:60;padding:20px;}
+.modal-back.show{display:flex;}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);width:100%;max-width:560px;max-height:90vh;overflow:auto;padding:24px;}
+.modal h3{margin:0 0 16px;font-size:18px;}
+.modal .field-row label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:6px;}
+.modal .field-row .input,.modal .field-row select{width:100%;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
+.rowbtn{font-size:11px;font-weight:600;color:var(--ink-3);background:none;border:1px solid var(--border);border-radius:6px;padding:2px 7px;cursor:pointer;margin-left:4px;}
+.rowbtn:hover{border-color:var(--accent-line);color:var(--accent);}
+.rowbtn.del:hover{border-color:var(--danger-border);color:var(--danger-text);}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="loginView" class="login-wrap">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+      </div>
+      <div>
+        <div class="login-brand-title">LinkGrid Homes</div>
+        <div class="login-brand-sub">Spec-Home Development Portal</div>
+        <span class="login-tag">Builder Workspace</span>
+      </div>
+    </div>
+    <div class="login-field">
+      <label>Email</label>
+      <input id="liEmail" value="momentumautowerke@gmail.com" />
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input id="liPass" type="password" value="demo" />
+    </div>
+    <div id="loginErr" style="display:none;color:var(--danger-text);background:var(--danger-bg);border:1px solid var(--danger-border);border-radius:8px;padding:9px 11px;font-size:12.5px;margin-bottom:12px;"></div>
+    <button class="btn" id="btnSignIn" onclick="signIn()">Sign in</button>
+    <div class="divider-or">or</div>
+    <button class="btn btn-google" onclick="signInGoogle()">
+      <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </button>
+    <div class="login-hint">Sign in as <b>momentumautowerke@gmail.com</b> (client) or <b>alex.toler@tolercorp.com</b> (master) &middot; pw <b>demo</b>. Start the server with <b>start-tolerhomes.bat</b>.</div>
+  </div>
+</div>
+
+<!-- ============== WORKSPACE PICKER ============== -->
+<div id="wsPickerView" class="login-wrap hidden" style="display:none">
+  <div class="login-card" style="max-width:460px">
+    <div class="login-brand">
+      <div class="login-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+      <div><div class="login-brand-title">Choose a workspace</div><div class="login-brand-sub" id="wsPickerEmail"></div></div>
+    </div>
+    <div id="wsPickerList"></div>
+    <div class="login-hint">You only see workspaces your account can access.</div>
+    <div style="text-align:center;margin-top:10px"><a style="cursor:pointer;font-size:12px" onclick="signOut()">Sign out</a></div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="appView" class="hidden">
+  <div class="topbar"><div class="topbar-inner">
+    <div onclick="go('hub')" title="Go to home" style="display:flex;align-items:center;gap:14px;cursor:pointer">
+      <div class="tb-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+      <div><div class="tb-title">LinkGrid Homes</div><div class="tb-sub">Development Portal</div></div>
+    </div>
+    <div class="tb-spacer"></div>
+    <span id="tbWorkspace" class="pill accent" style="font-size:11px"></span>
+    <button class="btn-ghost" id="tbSwitch" style="padding:7px 13px;display:none" onclick="switchWorkspace()">Switch</button>
+    <div class="tb-user"><b>Alex Toler</b>Owner / Builder</div>
+    <button class="btn-ghost" onclick="signOut()">Sign out</button>
+  </div></div>
+  <div class="crumbs" id="crumbs"></div>
+  <div class="stage" id="stage"></div>
+  <div id="modalBack" class="modal-back"><div class="modal" id="modalBox"></div></div>
+  <div class="foot">LinkGrid Homes — spec-home development portal · built by A. S. Toler</div>
+  <button class="fb-fab" onclick="openFeedback()" title="Send a comment to Alex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+</div>
+
+<script>
+/* =================== ICONS =================== */
+const IC = {
+  pipeline:'<path d="M3 6h18M3 12h18M3 18h18"/><circle cx="7" cy="6" r="1.6"/><circle cx="14" cy="12" r="1.6"/><circle cx="10" cy="18" r="1.6"/>',
+  land:'<path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M9 20v-5h6v5"/>',
+  budget:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 15h3"/>',
+  subs:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><circle cx="18" cy="9" r="2.2"/><path d="M16 20c0-2 1-3.5 3-3.5"/>',
+  materials:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v8l9 4 9-4V7"/><path d="M12 11v8"/>',
+  inspect:'<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
+  listing:'<path d="M3 9l9-7 9 7v11a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+  profit:'<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>',
+  design:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  schedule:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+  changes:'<path d="M3 7h13l-3-3M21 17H8l3 3"/>',
+  financing:'<path d="M3 10l9-6 9 6"/><path d="M5 10v9h14v-9"/><path d="M9 19v-5h6v5"/>',
+  closeout:'<path d="M9 11l3 3 8-8"/><path d="M21 12a9 9 0 1 1-6.2-8.5"/>',
+  dashboard:'<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/>',
+  marginwatch:'<path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 7v5l3 2"/><path d="M16 3l5 2-2 5"/>',
+  arrow:'<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>'
+};
+function svg(p,w){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||2)+'" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+function money(n){if(n==null||isNaN(n))return '—';const neg=n<0;n=Math.abs(Math.round(n));return (neg?'-$':'$')+n.toLocaleString('en-US');}
+function moneyK(n){if(n==null||isNaN(n))return '—';const neg=n<0;const v=Math.abs(n);let s;if(v>=1000000)s='$'+(v/1000000).toFixed(2)+'M';else if(v>=1000)s='$'+Math.round(v/1000)+'k';else s='$'+Math.round(v);return (neg?'-':'')+s;}
+function pct(n){return (n*100).toFixed(1)+'%';}
+
+/* =================== STAGES =================== */
+const STAGES = ['Lead / Lot Identified','Underwriting','Offer Submitted','Acquisition Under Contract','Due Diligence','Acquired','Design / Plans','Permitting','Pre-Construction','Under Construction','Final / Closeout','Listed','Buyer Under Contract','In Escrow','Sold','Archived'];
+const STAGE_MAP = {'Acquisition':'Underwriting','Design & Permits':'Design / Plans','Budgeting':'Pre-Construction','Construction':'Under Construction','Listing':'Listed','Sold':'Sold'};
+function stageOf(h){const x=(h&&h.stage)||'';return STAGE_MAP[x]||x;}
+
+/* =================== SAMPLE DATA =================== */
+let HOMES = [
+  {
+    id:'TH-01', name:'Skyline Modern', address:'418 Crestview Dr, Orinda CA', lot:'APN 268-110-04',
+    stage:'Construction', sqft:4200, beds:5, baths:4.5, start:'2025-09-12', targetList:'2026-08-01',
+    land:1250000, landClosing:42000,
+    soft:{'Architecture & Design':118000,'Permits & Fees':86000,'Engineering':54000,'Financing / Carry':140000},
+    budget:[
+      {div:'Sitework & Demo',budget:185000,committed:185000,actual:171000},
+      {div:'Foundation',budget:240000,committed:240000,actual:236500},
+      {div:'Framing',budget:430000,committed:430000,actual:398000},
+      {div:'Roofing',budget:120000,committed:120000,actual:0},
+      {div:'Mechanical / Plumbing / Electrical',budget:520000,committed:495000,actual:210000},
+      {div:'Windows & Doors',budget:210000,committed:210000,actual:188000},
+      {div:'Exterior Finishes',budget:265000,committed:120000,actual:0},
+      {div:'Interior Finishes',budget:540000,committed:90000,actual:0},
+      {div:'Landscape & Hardscape',budget:175000,committed:0,actual:0},
+      {div:'General Conditions',budget:160000,committed:160000,actual:96000}
+    ],
+    subs:[
+      {trade:'Concrete / Foundation',co:'Diablo Concrete Co.',value:240000,status:'Complete'},
+      {trade:'Framing',co:'Summit Framers Inc.',value:430000,status:'In progress'},
+      {trade:'Plumbing',co:'BayPro Plumbing',value:165000,status:'In progress'},
+      {trade:'Electrical',co:'Voltline Electric',value:185000,status:'In progress'},
+      {trade:'HVAC',co:'Comfort Systems NorCal',value:170000,status:'Contracted'},
+      {trade:'Roofing',co:'Apex Roofing',value:120000,status:'Scheduled'},
+      {trade:'Drywall',co:'—',value:0,status:'Bidding'}
+    ],
+    materials:[
+      {po:'PO-1042',vendor:'ProBuild Lumber',item:'Framing package — Lot 1',amount:142000,status:'Delivered'},
+      {po:'PO-1051',vendor:'Marvin Windows',item:'Window & door package',amount:188000,status:'Delivered'},
+      {po:'PO-1066',vendor:'Ferguson',item:'Plumbing fixtures (rough)',amount:54000,status:'Partial'},
+      {po:'PO-1071',vendor:'Apex Roofing Supply',item:'Standing seam metal roof',amount:78000,status:'Ordered'}
+    ],
+    inspections:[
+      {type:'Foundation / Footing',date:'2025-10-04',status:'Passed'},
+      {type:'Underground Plumbing',date:'2025-10-18',status:'Passed'},
+      {type:'Rough Framing',date:'2026-02-20',status:'Passed'},
+      {type:'Rough MEP',date:'2026-04-15',status:'Scheduled'},
+      {type:'Insulation',date:null,status:'Pending'},
+      {type:'Final / CO',date:null,status:'Pending'}
+    ],
+    listing:{listPrice:5850000, listDate:null, status:'Not listed', salePrice:null, closeDate:null, agent:'TBD'}
+  },
+  {
+    id:'TH-02', name:'Walnut Glen Estate', address:'71 Rancho Verde Ln, Lafayette CA', lot:'APN 244-051-12',
+    stage:'Design & Permits', sqft:5100, beds:5, baths:5.5, start:'2026-01-10', targetList:'2027-02-01',
+    land:1680000, landClosing:51000,
+    soft:{'Architecture & Design':165000,'Permits & Fees':0,'Engineering':72000,'Financing / Carry':95000},
+    budget:[
+      {div:'Sitework & Demo',budget:260000,committed:0,actual:0},
+      {div:'Foundation',budget:310000,committed:0,actual:0},
+      {div:'Framing',budget:560000,committed:0,actual:0},
+      {div:'Roofing',budget:155000,committed:0,actual:0},
+      {div:'Mechanical / Plumbing / Electrical',budget:640000,committed:0,actual:0},
+      {div:'Windows & Doors',budget:285000,committed:0,actual:0},
+      {div:'Exterior Finishes',budget:340000,committed:0,actual:0},
+      {div:'Interior Finishes',budget:720000,committed:0,actual:0},
+      {div:'Landscape & Hardscape',budget:230000,committed:0,actual:0},
+      {div:'General Conditions',budget:200000,committed:0,actual:0}
+    ],
+    subs:[
+      {trade:'Civil / Grading',co:'Terra Engineering',value:95000,status:'Contracted'},
+      {trade:'Concrete / Foundation',co:'—',value:0,status:'Bidding'},
+      {trade:'Framing',co:'—',value:0,status:'Bidding'}
+    ],
+    materials:[],
+    inspections:[
+      {type:'Planning Review',date:'2026-03-01',status:'Passed'},
+      {type:'Building Permit',date:null,status:'In review'}
+    ],
+    listing:{listPrice:7450000, listDate:null, status:'Not listed', salePrice:null, closeDate:null, agent:'TBD'}
+  },
+  {
+    id:'TH-03', name:'Cedar Ridge Farmhouse', address:'1205 Reliez Valley Rd, Lafayette CA', lot:'APN 166-220-19',
+    stage:'Sold', sqft:3600, beds:4, baths:3.5, start:'2024-03-01', targetList:'2025-06-01',
+    land:865000, landClosing:29000,
+    soft:{'Architecture & Design':84000,'Permits & Fees':68000,'Engineering':36000,'Financing / Carry':148000},
+    budget:[
+      {div:'Sitework & Demo',budget:135000,committed:135000,actual:131000},
+      {div:'Foundation',budget:185000,committed:185000,actual:182000},
+      {div:'Framing',budget:330000,committed:330000,actual:341000},
+      {div:'Roofing',budget:95000,committed:95000,actual:93000},
+      {div:'Mechanical / Plumbing / Electrical',budget:400000,committed:400000,actual:412000},
+      {div:'Windows & Doors',budget:158000,committed:158000,actual:155000},
+      {div:'Exterior Finishes',budget:205000,committed:205000,actual:211000},
+      {div:'Interior Finishes',budget:420000,committed:420000,actual:438000},
+      {div:'Landscape & Hardscape',budget:128000,committed:128000,actual:133000},
+      {div:'General Conditions',budget:120000,committed:120000,actual:124000}
+    ],
+    subs:[{trade:'All trades',co:'Closed out',value:0,status:'Complete'}],
+    materials:[{po:'—',vendor:'Various',item:'Project total (closed)',amount:0,status:'Closed'}],
+    inspections:[
+      {type:'Final / CO',date:'2025-05-18',status:'Passed'}
+    ],
+    listing:{listPrice:3995000, listDate:'2025-06-04', status:'Sold', salePrice:4150000, closeDate:'2025-08-19', agent:'Compass — M. Reyes'}
+  }
+];
+
+/* =================== FINANCE ENGINE =================== */
+function softTotal(h){return Object.values((h&&h.soft)||{}).reduce((a,b)=>a+num(b),0);}
+function hardBudget(h){return ((h&&h.budget)||[]).reduce((a,b)=>a+num(b.budget),0);}
+function hardActual(h){return ((h&&h.budget)||[]).reduce((a,b)=>a+num(b.actual),0);}
+function hardCommitted(h){return ((h&&h.budget)||[]).reduce((a,b)=>a+num(b.committed),0);}
+function landTotal(h){return num(h&&h.land)+num(h&&h.landClosing);}
+// Projected total cost = land + soft + hard budget (forecast at completion uses max of budget vs committed)
+function approvedCO(h){return (h.changeOrders||[]).filter(c=>/approv/i.test(c.status||'')).reduce((a,c)=>a+(c.amount||0),0);}
+function selectionOver(h){return (h.selections||[]).reduce((a,s)=>a+Math.max(0,(s.actual||0)-(s.allowance||0)),0);}
+function projectedCost(h){return calcFin(h).projectedCost;}
+function costToDate(h){return landTotal(h)+softTotal(h)+hardActual(h);}
+function revenue(h){
+  const l=h.listing||{};
+  if(num(l.salePrice)) return num(l.salePrice);
+  if(num(l.acceptedOfferPrice)) return num(l.acceptedOfferPrice);
+  if(num(l.currentListPrice)) return num(l.currentListPrice);
+  if(num(l.listPrice)) return num(l.listPrice);
+  if(h.forecast&&num(h.forecast.targetSalePrice)) return num(h.forecast.targetSalePrice);
+  if(h.proForma&&num(h.proForma.originalTargetSalePrice)) return num(h.proForma.originalTargetSalePrice);
+  return 0;
+}
+function sellingCosts(h){
+  const l=h.listing||{}; const rev=revenue(h);
+  const commission = num(l.commissionAmount)>0?num(l.commissionAmount):(num(l.commissionPercent)>0?rev*num(l.commissionPercent)/100:rev*0.06);
+  return commission + num(l.sellerConcessions) + num(l.closingCosts) + num(l.transferTaxes) + num(l.otherSaleCosts);
+}
+function num(v){const n=parseFloat(String(v==null?'':v).replace(/[^0-9.\-]/g,''));return isFinite(n)?n:0;}
+function profit(h){return calcFin(h).projectedProfit;}
+function margin(h){return calcFin(h).margin;}
+function stageIndex(s){const n=STAGE_MAP[s]||s;return STAGES.indexOf(n);}
+
+/* =================== ROUTER =================== */
+let CRUMB=[];
+function go(view,arg){render(view,arg);window.scrollTo(0,0);}
+function setCrumbs(parts){
+  CRUMB=parts;
+  document.getElementById('crumbs').innerHTML = parts.map((p,i)=>{
+    if(i===parts.length-1) return '<span>'+p.label+'</span>';
+    return '<a onclick="go(\''+p.view+'\''+(p.arg?',\''+p.arg+'\'':'')+')">'+p.label+'</a><span class="sep">/</span>';
+  }).join('');
+}
+
+/* =================== AUTH (server-backed) =================== */
+let SESSION=null;
+function loginErr(msg){const e=document.getElementById('loginErr');if(!msg){e.style.display='none';return;}e.textContent=msg;e.style.display='block';}
+function enterApp(user){
+  SESSION=user;
+  document.querySelector('.tb-user').innerHTML='<b>'+(user.display_name||user.email)+'</b>'+(user.role||'');
+  const wc=document.getElementById('tbWorkspace'); if(wc) wc.textContent=user.workspace_name||'';
+  document.getElementById('loginView').classList.add('hidden');
+  const pv=document.getElementById('wsPickerView'); if(pv){pv.classList.add('hidden');pv.style.display='none';}
+  document.getElementById('appView').classList.remove('hidden');
+  loadHomesData().then(()=>go('hub'));
+  fetch('/api/ai-status').then(r=>r.json()).then(d=>{AI_LIVE=!!(d&&d.configured);}).catch(()=>{});
+  fetch('/api/my-workspaces').then(r=>r.json()).then(d=>{const sw=document.getElementById('tbSwitch'); if(sw) sw.style.display=(d.ok&&d.workspaces.length>1)?'inline-flex':'none';}).catch(()=>{});
+}
+async function signIn(){
+  loginErr('');
+  const btn=document.getElementById('btnSignIn'); if(btn)btn.disabled=true;
+  const email=document.getElementById('liEmail').value.trim();
+  const password=document.getElementById('liPass').value;
+  try{
+    const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+    const d=await r.json();
+    if(!r.ok||!d.ok){loginErr(({invalid_credentials:'Invalid email or password.',no_workspace_access:'This account has no workspace access.',missing_fields:'Enter email and password.'})[d.error]||d.error||'Sign-in failed.');return;}
+    if(d.workspaces.length===1){ await selectWorkspace(d.workspaces[0].slug); return; }
+    showPicker(d.email,d.workspaces);
+  }catch(e){
+    loginErr('Server not reachable. Start it with start-tolerhomes.bat, then open http://localhost:4500');
+  }finally{ if(btn)btn.disabled=false; }
+}
+async function signInGoogle(){
+  loginErr('');
+  try{
+    const r=await fetch('/auth/google/start'); const d=await r.json();
+    if(d.configured && d.url){ window.location.href=d.url; return; }
+    loginErr(d.message||'Google sign-in is not configured yet. Add a Google OAuth client in server.js (see README).');
+  }catch(e){ loginErr('Server not reachable. Start start-tolerhomes.bat first.'); }
+}
+async function signOut(){
+  try{ await fetch('/api/logout',{method:'POST'}); }catch(e){}
+  SESSION=null;
+  document.getElementById('appView').classList.add('hidden');
+  document.getElementById('loginView').classList.remove('hidden');
+}
+
+/* =================== RENDER =================== */
+function render(view,arg){
+  const s=document.getElementById('stage');
+  if(view==='hub') return renderHub(s);
+  if(view==='pipeline') return renderPipeline(s);
+  if(view==='acquisition') return renderAcquisition(s);
+  if(view==='budget') return renderBudgetModule(s);
+  if(view==='subs') return renderSubsModule(s);
+  if(view==='materials') return renderMaterialsModule(s);
+  if(view==='inspections') return renderInspectionsModule(s);
+  if(view==='listing') return renderListingModule(s);
+  if(view==='profit') return renderProfit(s);
+  if(view==='dashboard') return renderDashboard(s);
+  if(view==='marginwatch') return renderMarginWatch(s);
+  if(view==='design') return renderDesignModule(s);
+  if(view==='schedule') return renderScheduleModule(s);
+  if(view==='changes') return renderChangesModule(s);
+  if(view==='financing') return renderFinancingModule(s);
+  if(view==='closeout') return renderCloseoutModule(s);
+  if(view==='access') return renderAccess(s);
+  if(view==='home') return renderHome(s,arg);
+}
+
+/* ---- HUB ---- */
+const TILE_DEFS={
+  dashboard:{v:'dashboard',ic:'dashboard',t:'Executive Dashboard',sub:'Portfolio revenue, cost, profit, margin, and capital at a glance.',meta:()=>moneyK(HOMES.reduce((a,h)=>a+calcFin(h).projectedProfit,0))+' proj. profit'},
+  marginwatch:{v:'marginwatch',ic:'marginwatch',t:'Margin Watch',sub:'Every deal at risk — drift, overages, delays, stale listings.',meta:()=>marginWatchCount()+' alerts'},
+  pipeline:{v:'pipeline',ic:'pipeline',t:'Development Pipeline',sub:'Every home by development stage, lot to closing.',meta:()=>HOMES.length+' active homes'},
+  profit:{v:'profit',ic:'profit',t:'Cost & Profit',sub:'Portfolio P&L — full cost, revenue, and margin per home.',meta:()=>pct(portfolioMargin())+' avg margin'},
+  acquisition:{v:'acquisition',ic:'land',t:'Acquisition & Deal Analyzer',sub:'Find lots, underwrite the deal, get an acquire/review/reject call.',meta:()=>'Underwriting'},
+  design:{v:'design',ic:'design',t:'Design & Finish Package',sub:'Plans, plan uploads, and builder finish selections vs allowances.',meta:()=>'Finish package'},
+  budget:{v:'budget',ic:'budget',t:'Budget & Pro Forma',sub:'Hard + soft cost budgets, committed vs actual by division.',meta:()=>moneyK(HOMES.reduce((a,h)=>a+hardBudget(h),0))+' budgeted'},
+  financing:{v:'financing',ic:'financing',t:'Financing & Draws',sub:'Construction loan and draw schedule per home.',meta:()=>'Capital'},
+  subs:{v:'subs',ic:'subs',t:'Subcontractors',sub:'Trade buyout — contracts, bids, and status.',meta:()=>'Trade contracts'},
+  materials:{v:'materials',ic:'materials',t:'Materials & POs',sub:'Purchase orders, vendors, and delivery tracking.',meta:()=>'Procurement'},
+  schedule:{v:'schedule',ic:'schedule',t:'Schedule',sub:'AI-built construction schedule and milestones.',meta:()=>'Timeline'},
+  changes:{v:'changes',ic:'changes',t:'Change Orders',sub:'Scope changes that flow straight into the P&L.',meta:()=>'Cost control'},
+  inspections:{v:'inspections',ic:'inspect',t:'Permits & Inspections',sub:'Permit status and milestone inspection sign-offs.',meta:()=>'Compliance'},
+  closeout:{v:'closeout',ic:'closeout',t:'Closeout',sub:'CO, lien releases, warranties, and as-builts.',meta:()=>'Handover'},
+  listing:{v:'listing',ic:'listing',t:'Listing & Sales',sub:'List prices, market status, and closed sales.',meta:()=>'Go to market'}
+};
+const TILE_TIPS={
+  dashboard:'Portfolio command center: total revenue, cost, profit, blended margin, capital, and your top-5 risk projects at a glance.',
+  pipeline:'Every home grouped by development stage (lot to closing), with revenue, projected cost, profit, margin, and a risk badge per home.',
+  marginwatch:'Every deal at risk across the portfolio — low margin, profit drift, selection overages, pending change orders, delays, stale listings — sorted by severity.',
+  acquisition:'Underwrite a lot before you buy: enter land + build + sale assumptions and get projected profit, margin, and an Acquire / Review / Reject recommendation.',
+  design:'Design team and approved-plan uploads, plus builder finish selections tracked against allowances (overages flow into the P&L).',
+  budget:'Hard and soft cost budget by division — budget vs committed vs actual, with variance and totals.',
+  financing:'Construction loan and draw schedule per home: balance, equity, carrying cost, and funded draws.',
+  subs:'Trade buyout across every home: subcontractor contracts, bids, and status.',
+  materials:'Purchase orders and procurement across all jobs: vendors, amounts, and delivery status.',
+  schedule:'AI-built or manual construction schedule with dated milestones and a Gantt view.',
+  changes:'Change orders by source — approved ones flow into profit, pending ones show as exposure only.',
+  inspections:'Permit status and milestone inspection sign-offs across the portfolio.',
+  closeout:'Listing-readiness checklist: certificate of occupancy, lien releases, warranties, as-builts, photography.',
+  listing:'Take homes to market: list price, days on market, offers, escrow, sale price, selling costs, and net proceeds.'
+};
+const HUB_GROUPS=[
+  {label:'Overview', keys:['dashboard','pipeline','marginwatch','profit']},
+  {label:'Property & Lot Search', keys:['acquisition','design','budget','financing']},
+  {label:'Construction', keys:['subs','materials','schedule','changes','inspections']},
+  {label:'Post-Construction', keys:['closeout']},
+  {label:'Selling & Sold', keys:['listing']}
+];
+function portfolioMargin(){let r=0,p=0;HOMES.forEach(h=>{r+=revenue(h);p+=profit(h);});return r?p/r:0;}
+function renderHub(s){
+  setCrumbs([{label:'Home'}]);
+  const invested=HOMES.reduce((a,h)=>a+costToDate(h),0);
+  const projRev=HOMES.reduce((a,h)=>a+revenue(h),0);
+  const projProfit=HOMES.reduce((a,h)=>a+profit(h),0);
+  const building=HOMES.filter(h=>['Design & Permits','Budgeting','Construction'].includes(h.stage)).length;
+  s.innerHTML=`
+    <div class="hub-head">
+      <h1>Development Portal</h1>
+      <p>Run every spec home as a development deal — from lot acquisition to closing — with live cost, risk, and profit on each home.</p>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="k-label">Homes in portfolio</div><div class="k-val">${HOMES.length}</div><div class="k-sub">${building} in active build</div></div>
+      <div class="kpi"><div class="k-label">Capital invested</div><div class="k-val">${moneyK(invested)}</div><div class="k-sub">cost to date</div></div>
+      <div class="kpi"><div class="k-label">Projected revenue</div><div class="k-val">${moneyK(projRev)}</div><div class="k-sub">list + sold prices</div></div>
+      <div class="kpi"><div class="k-label">Projected profit</div><div class="k-val ${projProfit>=0?'good':'bad'}">${moneyK(projProfit)}</div><div class="k-sub">${pct(portfolioMargin())} avg margin</div></div>
+    </div>
+    ${HUB_GROUPS.map(g=>`
+    <div class="section-label">${g.label}</div>
+    <div class="panels-grid">
+      ${g.keys.map(k=>TILE_DEFS[k]).map(t=>`
+        <button class="panel-btn" title="${(TILE_TIPS[t.v]||t.sub).replace(/"/g,'&quot;')}" onclick="go('${t.v}')">
+          <span class="panel-icon">${svg(IC[t.ic])}</span>
+          <span class="panel-title">${t.t}</span>
+          <span class="panel-sub">${t.sub}</span>
+          <span class="panel-meta">${t.meta()}</span>
+          <span class="panel-arrow">${svg(IC.arrow)}</span>
+        </button>`).join('')}
+    </div>`).join('')}
+    ${SESSION&&(SESSION.role==='owner'||SESSION.role==='master')?`
+    <div class="section-label">Administration</div>
+    <div class="panels-grid">
+      <button class="panel-btn" title="Owner only: add or remove logins for this workspace and choose who may use Google sign-in." onclick="go('access')">
+        <span class="panel-icon">${svg(IC.subs)}</span>
+        <span class="panel-title">Team &amp; Access</span>
+        <span class="panel-sub">Choose who can sign in to this workspace — and who is allowed to use Google sign-in.</span>
+        <span class="panel-meta">Owner only</span>
+        <span class="panel-arrow">${svg(IC.arrow)}</span>
+      </button>
+    </div>`:''}`;
+}
+
+/* ---- PIPELINE ---- */
+function stagePill(stage){
+  const n=STAGE_MAP[stage]||stage;
+  const cls=/Sold|Archived/.test(n)?'good':(/Listed|Escrow|Buyer Under Contract/.test(n)?'accent':'warn');
+  return `<span class="pill ${cls}">${n}</span>`;
+}
+function renderPipeline(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Development Pipeline'}]);
+  const stagesWithHomes=STAGES.filter(st=>HOMES.some(h=>stageOf(h)===st));
+  const rowFor=h=>{const f=calcFin(h);const city=((h.address||'').split(',').slice(-1)[0]||'').trim();
+    return `<tr onclick="go('home','${h.id}')" style="cursor:pointer">
+      <td><b>${h.name}</b><div class="muted" style="font-size:11px">${city?city+' · ':''}${(h.sqft||0).toLocaleString()} sf</div></td>
+      <td class="num">${moneyK(f.revenue)}</td>
+      <td class="num">${moneyK(f.projectedCost)}</td>
+      <td class="num" style="color:${f.projectedProfit>=0?'var(--good-text)':'var(--danger-text)'}">${moneyK(f.projectedProfit)}</td>
+      <td class="num">${pct(f.margin)}</td>
+      <td>${riskPill(f.riskStatus, f.alerts)}</td>
+    </tr>`;};
+  const groupRow=(label,n)=>`<tr><td colspan="6" style="background:var(--panel2);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:8px 12px">${label} <span style="color:var(--accent)">${n}</span></td></tr>`;
+  const body=stagesWithHomes.map(st=>{const hs=HOMES.filter(h=>stageOf(h)===st);return groupRow(st,hs.length)+hs.map(rowFor).join('');}).join('');
+  s.innerHTML=`
+    <button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+    <div class="panel-head"><div><h2>Development Pipeline</h2><p>Every home by development stage. Click a row to open its full record.</p></div><button class="btn" style="width:auto" onclick="newHomeForm()">+ New Home</button></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table>
+        <thead><tr><th>Home</th><th class="num">Revenue</th><th class="num">Proj. cost</th><th class="num">Proj. profit</th><th class="num">Margin</th><th>Risk</th></tr></thead>
+        <tbody>${body||'<tr><td colspan="6" class="muted" style="padding:18px">No homes yet. Click + New Home to add one.</td></tr>'}</tbody>
+      </table>
+    </div>`;
+}
+function homeCard(h){
+  const f=calcFin(h);
+  return `<div class="home-card" onclick="go('home','${h.id}')">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px"><div class="hc-name">${h.name}</div>${riskPill(f.riskStatus, f.alerts)}</div>
+    <div class="hc-addr">${(h.address||'').split(',')[1]||''} · ${(h.sqft||0).toLocaleString()} sf</div>
+    <div class="hc-fin"><span class="muted">Proj. profit</span><b style="color:${f.projectedProfit>=0?'var(--good-text)':'var(--danger-text)'}">${moneyK(f.projectedProfit)} · ${pct(f.margin)}</b></div>
+  </div>`;
+}
+
+/* ---- HOME DETAIL ---- */
+let HOME_TAB='overview';
+function renderHome(s,id){
+  CURRENT_HOME=id;
+  const h=HOMES.find(x=>x.id===id);if(!h)return go('pipeline');
+  setCrumbs([{label:'Home',view:'hub'},{label:'Pipeline',view:'pipeline'},{label:h.name}]);
+  s.innerHTML=`
+    <button class="back-link" onclick="go('pipeline')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back to pipeline</button>
+    <div class="panel-head">
+      <div><h2>${h.name}</h2><p>${h.address} · ${h.lot}</p></div>
+      <div style="text-align:right">${stagePill(h.stage)}<div class="muted" style="font-size:12px;margin-top:6px">${h.beds} bd · ${h.baths} ba · ${h.sqft.toLocaleString()} sf</div></div>
+    </div>
+    <div class="tabs" id="homeTabs">
+      ${['overview','design','schedule','budget','subs','materials','changes','financing','inspections','closeout','listing','pl'].map(t=>`<button class="tab ${HOME_TAB===t?'active':''}" onclick="HOME_TAB='${t}';renderHome(document.getElementById('stage'),'${id}')">${tabLabel(t)}</button>`).join('')}
+    </div>
+    <div id="homeBody"></div>`;
+  document.getElementById('homeBody').innerHTML=homeTabBody(h);
+}
+function tabLabel(t){return {overview:'Overview',design:'Design',schedule:'Schedule',budget:'Budget',subs:'Subs',materials:'Materials',changes:'Changes',financing:'Financing',inspections:'Inspections',closeout:'Closeout',listing:'Listing',pl:'P&L'}[t];}
+function homeTabBody(h){
+  if(HOME_TAB==='overview') return homeOverview(h);
+  if(HOME_TAB==='design') return designTab(h);
+  if(HOME_TAB==='schedule') return scheduleTab(h);
+  if(HOME_TAB==='changes') return changesTab(h);
+  if(HOME_TAB==='financing') return financingTab(h);
+  if(HOME_TAB==='closeout') return closeoutTab(h);
+  if(HOME_TAB==='budget') return budgetTable(h);
+  if(HOME_TAB==='subs') return subsTable(h);
+  if(HOME_TAB==='materials') return materialsTable(h);
+  if(HOME_TAB==='inspections') return inspectionsTable(h);
+  if(HOME_TAB==='listing') return listingCard(h);
+  if(HOME_TAB==='pl') return plCard(h);
+}
+function homeOverview(h){
+  const f=calcFin(h); const l=h.listing||{};
+  const kc=(label,val,sub,cls)=>`<div class="kpi"><div class="k-label">${label}</div><div class="k-val ${cls||''}">${val}</div>${sub?`<div class="k-sub">${sub}</div>`:''}</div>`;
+  const revLbl=num(l.salePrice)?'sale price':(num(l.acceptedOfferPrice)?'accepted offer':((num(l.currentListPrice)||num(l.listPrice))?'current list':'target sale'));
+  return `
+  <div class="kpi-row">
+    ${kc('Expected revenue',moneyK(f.revenue),revLbl)}
+    ${kc('Projected cost',moneyK(f.projectedCost),'land + soft + hard + COs')}
+    ${kc('Projected profit',moneyK(f.projectedProfit),pct(f.margin)+' margin',f.projectedProfit>=0?'good':'bad')}
+    ${kc('Risk',f.riskStatus,(f.alerts[0]?f.alerts[0].msg.slice(0,46):'No flags'),f.riskScore>=40?'bad':'')}
+  </div>
+  <div class="grid-2">
+    <div class="card"><h3>Profit &amp; drift</h3>
+      <div class="pf-line"><span class="muted">Original projected profit</span><span>${money(f.origProfit)}</span></div>
+      <div class="pf-line"><span class="muted">Current projected profit</span><span>${money(f.projectedProfit)}</span></div>
+      <div class="pf-line"><span class="muted">Profit drift</span><span style="color:${f.drift>=0?'var(--good-text)':'var(--danger-text)'}">${money(f.drift)} (${pct(f.driftPct)})</span></div>
+      <div class="pf-line total"><span>Margin</span><span style="color:${f.margin>=0.15?'var(--good-text)':'var(--danger-text)'}">${pct(f.margin)}</span></div>
+      <div class="muted" style="font-size:12px;margin-top:8px">Pending CO exposure ${money(f.pendCO)} &middot; selection overage ${money(f.selOver)} &middot; carry ${money(num((h.soft||{})['Financing / Carry']))}</div>
+    </div>
+    <div class="card"><h3>Status</h3>
+      <div class="pf-line"><span class="muted">Stage</span><span>${riskPill(f.riskStatus, f.alerts)}</span></div>
+      <select onchange="changeStage('${h.id}',this.value)" style="width:100%;margin-top:6px" title="Move this property to another stage">${STAGES.map(st=>`<option ${stageOf(h)===st?'selected':''}>${st}</option>`).join('')}</select>
+      <div class="pf-line"><span class="muted">Sale status</span><span>${l.status||'Not listed'}${f.dom?` &middot; ${f.dom} DOM`:''}</span></div>
+      <div class="pf-line"><span class="muted">Start</span><span>${h.start||'—'}</span></div>
+      <div class="pf-line"><span class="muted">Target list</span><span>${h.targetList||'—'}</span></div>
+      <div style="margin:14px 0 6px;font-size:13px" class="muted">Hard cost: ${money(f.ha)} of ${money(f.hb)}</div>
+      <div class="bar-track"><div class="bar-fill ${f.ha>f.hb?'bad':'good'}" style="width:${Math.min(100,f.hb?f.ha/f.hb*100:0)}%"></div></div>
+    </div>
+  </div>
+  <div class="card"><h3>Top alerts</h3>
+    ${f.alerts.length?f.alerts.map(a=>`<div class="pf-line"><span>${sevPill(a.sev)} ${a.msg}</span><span class="muted">${a.impact?money(a.impact):''}</span></div>`).join(''):'<p class="muted" style="margin:0">No alerts — this deal looks healthy.</p>'}
+  </div>`;
+}
+function budgetTable(h){
+  const rows=(h.budget||[]).map((b,i)=>{
+    const over=b.actual>b.budget;
+    return `<tr><td>${b.div}</td><td class="num">${money(b.budget)}</td><td class="num">${money(b.committed)}</td><td class="num">${money(b.actual)}</td>
+      <td class="num"><span class="pill ${over?'bad':(b.actual>0?'good':'')}">${over?'Over':(b.actual>0?'On track':'Not started')}</span></td>
+      <td style="text-align:right"><button class="rowbtn" onclick="editBudgetForm(${i})">Edit</button></td></tr>`;
+  }).join('');
+  return `<div class="card"><h3>Hard cost budget by division</h3>
+    <table><thead><tr><th>Division</th><th class="num">Budget</th><th class="num">Committed</th><th class="num">Actual</th><th class="num">Status</th><th></th></tr></thead>
+    <tbody>${rows}</tbody>
+    <tfoot><tr><td>Total</td><td class="num">${money(hardBudget(h))}</td><td class="num">${money(hardCommitted(h))}</td><td class="num">${money(hardActual(h))}</td><td colspan="2"></td></tr></tfoot></table>
+    <div style="margin-top:12px" class="muted">Soft costs: ${Object.entries(h.soft).map(([k,v])=>k+' '+money(v)).join(' · ')} → ${money(softTotal(h))}</div>
+  </div>`;
+}
+function subsTable(h){
+  const subs=h.subs||[];
+  const rows=subs.map((s,i)=>`<tr><td>${s.trade}</td><td>${s.co}</td><td class="num">${s.value?money(s.value):'—'}</td><td>${subPill(s.status)}</td>${rowActions('subs',i)}</tr>`).join('');
+  return `<div class="card">${cardHdr('Subcontractor contracts','+ Add sub','addSubForm()')}
+    <table><thead><tr><th>Trade</th><th>Company</th><th class="num">Contract</th><th>Status</th><th></th></tr></thead><tbody>${rows}</tbody>
+    <tfoot><tr><td colspan="2">Committed to subs</td><td class="num">${money(subs.reduce((a,b)=>a+(b.value||0),0))}</td><td colspan="2"></td></tr></tfoot></table></div>`;
+}
+function subPill(st){const m={'Complete':'good','In progress':'accent','Contracted':'accent','Scheduled':'warn','Bidding':'warn'};return `<span class="pill ${m[st]||''}">${st}</span>`;}
+function materialsTable(h){
+  const mats=h.materials||[];
+  if(!mats.length||(mats.length===1&&mats[0].amount===0)) return `<div class="card">${cardHdr('Purchase orders','+ Add PO','addPOForm()')}<p class="muted">No purchase orders yet.</p></div>`;
+  const rows=mats.map((m,i)=>`<tr><td>${m.po}</td><td>${m.vendor}</td><td>${m.item}</td><td class="num">${money(m.amount)}</td><td>${matPill(m.status)}</td>${rowActions('materials',i)}</tr>`).join('');
+  return `<div class="card">${cardHdr('Purchase orders','+ Add PO','addPOForm()')}
+    <table><thead><tr><th>PO #</th><th>Vendor</th><th>Item</th><th class="num">Amount</th><th>Status</th><th></th></tr></thead><tbody>${rows}</tbody>
+    <tfoot><tr><td colspan="3">Total POs</td><td class="num">${money(mats.reduce((a,b)=>a+(b.amount||0),0))}</td><td colspan="2"></td></tr></tfoot></table></div>`;
+}
+function matPill(st){const m={'Delivered':'good','Partial':'warn','Ordered':'accent','Closed':''};return `<span class="pill ${m[st]||''}">${st}</span>`;}
+function inspectionsTable(h){
+  const ins=h.inspections||[];
+  const rows=ins.map((i,idx)=>`<tr><td>${i.type}</td><td>${i.date||'—'}</td><td>${inspPill(i.status)}</td>${rowActions('inspections',idx)}</tr>`).join('');
+  return `<div class="card">${cardHdr('Permits & inspections','+ Add inspection','addInspectionForm()')}
+    <table><thead><tr><th>Inspection</th><th>Date</th><th>Result</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function inspPill(st){const m={'Passed':'good','Scheduled':'accent','In review':'warn','Pending':'','Failed':'bad'};return `<span class="pill ${m[st]||''}">${st}</span>`;}
+function listingCard(h){
+  const l=h.listing||{}; const f=calcFin(h);
+  return `<div class="card">${cardHdr('Listing & sale','Edit listing','editListingForm()')}
+    <div class="grid-2"><div>
+      <div class="pf-line"><span class="muted">Status</span><span>${l.status||'Not listed'}${f.dom?` &middot; ${f.dom} DOM`:''}</span></div>
+      <div class="pf-line"><span class="muted">List price</span><span>${money(num(l.currentListPrice)||num(l.listPrice))}</span></div>
+      <div class="pf-line"><span class="muted">Accepted offer</span><span>${num(l.acceptedOfferPrice)?money(l.acceptedOfferPrice):'—'}</span></div>
+      <div class="pf-line"><span class="muted">Sale price</span><span>${num(l.salePrice)?money(l.salePrice):'—'}</span></div>
+      <div class="pf-line"><span class="muted">Agent</span><span>${l.agent||'—'}</span></div>
+    </div><div>
+      <div class="pf-line"><span class="muted">Revenue used</span><span>${money(f.revenue)}</span></div>
+      <div class="pf-line"><span class="muted">Selling cost</span><span>${money(f.selling)}</span></div>
+      <div class="pf-line"><span class="muted">Loan payoff</span><span>${money(f.loanPayoff)}</span></div>
+      <div class="pf-line"><span class="muted">Net dev. profit</span><span style="color:${f.projectedProfit>=0?'var(--good-text)':'var(--danger-text)'}">${money(f.projectedProfit)}</span></div>
+      <div class="pf-line total"><span>Cash at closing</span><span>${money(f.cashAtClosing)}</span></div>
+    </div></div>
+    <div class="muted" style="font-size:11.5px;margin-top:10px">Development profit = revenue − cost − selling. Cash at closing also nets loan payoff (payoff is not double-counted in profit).</div></div>`;
+}
+function plCard(h){
+  const f=calcFin(h);
+  const land=f.land,soft=f.softT,hard=f.hard,co=f.co,sel=f.selOver;
+  const cost=f.projectedCost,sc=f.selling,rev=f.revenue,p=f.projectedProfit;
+  return `<div class="card"><h3>Profit & loss${(h.listing||{}).salePrice?'':' (projected)'}</h3>
+    <div class="pf-line"><span>${h.listing.salePrice?'Sale price':'Target sale price'}</span><span>${money(rev)}</span></div>
+    <div class="pf-line"><span class="muted">Less: land basis</span><span>(${money(land)})</span></div>
+    <div class="pf-line"><span class="muted">Less: soft costs</span><span>(${money(soft)})</span></div>
+    <div class="pf-line"><span class="muted">Less: hard costs</span><span>(${money(hard)})</span></div>
+    ${co?`<div class="pf-line"><span class="muted">Less: approved change orders</span><span>(${money(co)})</span></div>`:''}
+    ${sel?`<div class="pf-line"><span class="muted">Less: selection overages</span><span>(${money(sel)})</span></div>`:''}
+    <div class="pf-line"><span class="muted">Less: selling costs (6%)</span><span>(${money(sc)})</span></div>
+    <div class="pf-line total"><span>Net profit</span><span style="color:${p>=0?'var(--good-text)':'var(--danger-text)'}">${money(p)} · ${pct(rev?p/rev:0)}</span></div>
+    <div class="muted" style="font-size:12px;margin-top:10px">Return on cost: ${pct(cost?p/cost:0)}</div>
+  </div>`;
+}
+
+/* ---- ACQUISITION + PRO FORMA ---- */
+function renderAcquisition(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Property Acquisition'}]);
+  s.innerHTML=`
+    <button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+    <div class="panel-head"><div><h2>Acquisition &amp; Deal Analyzer</h2><p>Underwrite a lot, then add it to the pipeline. Advance it through Under Contract, Due Diligence, In Escrow, and Sold on its project page.</p></div><button class="btn" style="width:auto" onclick="newHomeForm()">+ Add property</button></div>
+    <div class="grid-2">
+      <div class="card"><h3>Deal analyzer</h3>
+        <div class="field-row"><div><label>Land price</label><input class="input" id="pf_land" value="1100000" oninput="calcPF()"></div>
+          <div><label>Closing / acquisition costs</label><input class="input" id="pf_close" value="38000" oninput="calcPF()"></div></div>
+        <div class="field-row"><div><label>Build size (sf)</label><input class="input" id="pf_sf" value="4000" oninput="calcPF()"></div>
+          <div><label>Hard cost $/sf</label><input class="input" id="pf_psf" value="425" oninput="calcPF()"></div></div>
+        <div class="field-row"><div><label>Soft costs (% of hard)</label><input class="input" id="pf_soft" value="16" oninput="calcPF()"></div>
+          <div><label>Carry / financing</label><input class="input" id="pf_carry" value="140000" oninput="calcPF()"></div></div>
+        <div class="field-row"><div><label>Target sale price (ARV)</label><input class="input" id="pf_arv" value="4500000" oninput="calcPF()"></div>
+          <div><label>Selling cost (%)</label><input class="input" id="pf_sell" value="6" oninput="calcPF()"></div></div>
+      </div>
+      <div class="card"><h3>Projected return</h3><div id="pfOut" class="proforma-out"></div>
+        <div class="muted" style="font-size:12px;margin-top:12px">A healthy spec build typically targets a 15–20% margin on sale price to absorb market and cost risk.</div>
+        <button class="btn" style="width:100%;margin-top:14px" onclick="addDealAsProperty()">+ Add this deal as a property</button>
+      </div>
+    </div>
+    <div class="card"><h3>Lots under evaluation</h3>
+      <table><thead><tr><th>Property</th><th>Submarket</th><th class="num">Ask</th><th class="num">Est. ARV</th><th>Status</th></tr></thead><tbody>
+        <tr><td>71 Rancho Verde Ln</td><td>Lafayette</td><td class="num">${money(1680000)}</td><td class="num">${money(5950000)}</td><td><span class="pill good">In escrow</span></td></tr>
+        <tr><td>22 Las Trampas Rd</td><td>Alamo</td><td class="num">${money(1450000)}</td><td class="num">${money(5200000)}</td><td><span class="pill accent">Underwriting</span></td></tr>
+        <tr><td>305 Solana Dr</td><td>Orinda</td><td class="num">${money(995000)}</td><td class="num">${money(4100000)}</td><td><span class="pill warn">LOI drafted</span></td></tr>
+      </tbody></table></div>`;
+  calcPF();
+}
+function calcPF(){
+  const g=id=>parseFloat(document.getElementById(id).value)||0;
+  const land=g('pf_land')+g('pf_close');
+  const hard=g('pf_sf')*g('pf_psf');
+  const soft=hard*(g('pf_soft')/100)+g('pf_carry');
+  const cost=land+hard+soft;
+  const arv=g('pf_arv');
+  const sell=arv*(g('pf_sell')/100);
+  const profit=arv-cost-sell;
+  const m=arv?profit/arv:0;
+  const cls=m>=0.15?'good':(m>=0.08?'warn':'bad');
+  document.getElementById('pfOut').innerHTML=`
+    <div class="pf-line"><span class="muted">Land all-in</span><span>${money(land)}</span></div>
+    <div class="pf-line"><span class="muted">Hard costs</span><span>${money(hard)}</span></div>
+    <div class="pf-line"><span class="muted">Soft + carry</span><span>${money(soft)}</span></div>
+    <div class="pf-line"><span class="muted">Selling cost</span><span>${money(sell)}</span></div>
+    <div class="pf-line"><span>Total project cost</span><span><b>${money(cost+sell)}</b></span></div>
+    <div class="pf-line"><span>Sale price (ARV)</span><span>${money(arv)}</span></div>
+    <div class="pf-line total"><span>Profit</span><span style="color:${profit>=0?'var(--good-text)':'var(--danger-text)'}">${money(profit)}</span></div>
+    <div style="margin-top:6px"><span class="pill ${cls}">${pct(m)} margin · ${pct(cost?profit/cost:0)} on cost</span></div>
+    <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)">${(function(){const rec=m>=0.20?['Acquire','good','Meets the 20% development margin target.']:(m>=0.15?['Review','warn','Below 20% target — tighten land or build cost before buying.']:['Reject','bad','Below 15% — reduce basis, raise ARV, or pass.']);return `<span class="pill ${rec[1]}">Recommendation: ${rec[0]}</span> <div class="muted" style="font-size:12px;margin-top:6px">${rec[2]}</div>`;})()}</div>`;
+}
+
+/* ---- PORTFOLIO MODULES (cross-home roll-ups) ---- */
+function moduleHead(s,title,desc){
+  s.innerHTML=`<button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+    <div class="panel-head"><div><h2>${title}</h2><p>${desc}</p></div></div><div id="modBody"></div>`;
+}
+function renderBudgetModule(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Budget & Pro Forma'}]);
+  moduleHead(s,'Budget & Pro Forma','Hard-cost budget vs actuals across every active home. Click through to a home for the full division breakdown.');
+  const rows=HOMES.map(h=>{const hb=hardBudget(h),ha=hardActual(h),pctv=hb?ha/hb:0;
+    return `<tr onclick="go('home','${h.id}')" style="cursor:pointer">
+      <td><b>${h.name}</b></td><td>${stagePill(h.stage)}</td>
+      <td class="num">${money(hb)}</td><td class="num">${money(hardCommitted(h))}</td><td class="num">${money(ha)}</td>
+      <td style="width:140px"><div class="bar-track"><div class="bar-fill ${ha>hb?'bad':'good'}" style="width:${Math.min(100,pctv*100)}%"></div></div></td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card">
+    <table><thead><tr><th>Home</th><th>Stage</th><th class="num">Budget</th><th class="num">Committed</th><th class="num">Actual</th><th>Spent</th></tr></thead>
+    <tbody>${rows}</tbody>
+    <tfoot><tr><td colspan="2">Portfolio</td><td class="num">${money(HOMES.reduce((a,h)=>a+hardBudget(h),0))}</td><td class="num">${money(HOMES.reduce((a,h)=>a+hardCommitted(h),0))}</td><td class="num">${money(HOMES.reduce((a,h)=>a+hardActual(h),0))}</td><td></td></tr></tfoot></table></div>`;
+}
+function homeLink(h){return `<a onclick="go('home','${h.id}')" style="color:var(--accent);cursor:pointer;font-weight:600">${h.name}</a>`;}
+function renderSubsModule(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Subcontractors'}]);
+  moduleHead(s,'Subcontractors','Every trade contract across the portfolio. Spot what is still out to bid.');
+  let all=[];HOMES.forEach(h=>(h.subs||[]).forEach(su=>{if(su.value||su.status!=='Complete')all.push({h,su});}));
+  const rows=all.map(({h,su})=>`<tr><td>${homeLink(h)}</td><td>${su.trade}</td><td>${su.co}</td><td class="num">${su.value?money(su.value):'—'}</td><td>${subPill(su.status)}</td></tr>`).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Trade</th><th>Company</th><th class="num">Contract</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function renderMaterialsModule(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Materials & POs'}]);
+  moduleHead(s,'Materials & Purchase Orders','Open procurement across all jobs.');
+  let all=[];HOMES.forEach(h=>(h.materials||[]).forEach(m=>{if(m.amount>0)all.push({h,m});}));
+  const rows=all.map(({h,m})=>`<tr><td>${homeLink(h)}</td><td>${m.po}</td><td>${m.vendor}</td><td>${m.item}</td><td class="num">${money(m.amount)}</td><td>${matPill(m.status)}</td></tr>`).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>PO</th><th>Vendor</th><th>Item</th><th class="num">Amount</th><th>Status</th></tr></thead><tbody>${rows}</tbody>
+    <tfoot><tr><td colspan="4">Open POs</td><td class="num">${money(all.reduce((a,x)=>a+x.m.amount,0))}</td><td></td></tr></tfoot></table></div>`;
+}
+function renderInspectionsModule(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Permits & Inspections'}]);
+  moduleHead(s,'Permits & Inspections','Upcoming and recent sign-offs across the portfolio.');
+  let all=[];HOMES.forEach(h=>(h.inspections||[]).forEach(i=>all.push({h,i})));
+  all.sort((a,b)=>(a.i.date||'9')<(b.i.date||'9')?1:-1);
+  const rows=all.map(({h,i})=>`<tr><td>${homeLink(h)}</td><td>${i.type}</td><td>${i.date||'—'}</td><td>${inspPill(i.status)}</td></tr>`).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Inspection</th><th>Date</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function renderListingModule(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Listing & Sales'}]);
+  moduleHead(s,'Listing & Sales','Homes going to market and recent closings.');
+  const rows=HOMES.map(h=>{const l=h.listing;return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${l.status}</td><td class="num">${money(l.listPrice)}</td><td class="num">${l.salePrice?money(l.salePrice):'—'}</td><td class="num">${money(revenue(h)/h.sqft)}/sf</td><td>${l.agent}</td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Status</th><th class="num">List</th><th class="num">Sold</th><th class="num">$/sf</th><th>Agent</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+/* ---- PROFIT DASHBOARD ---- */
+function renderProfit(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Cost & Profit'}]);
+  const totCost=HOMES.reduce((a,h)=>a+projectedCost(h),0);
+  const totRev=HOMES.reduce((a,h)=>a+revenue(h),0);
+  const totSell=HOMES.reduce((a,h)=>a+sellingCosts(h),0);
+  const totProfit=HOMES.reduce((a,h)=>a+profit(h),0);
+  const rows=HOMES.map(h=>{const p=profit(h),m=margin(h);
+    return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${stagePill(h.stage)}</td>
+      <td class="num">${money(projectedCost(h))}</td><td class="num">${money(revenue(h))}</td>
+      <td class="num" style="color:${p>=0?'var(--good-text)':'var(--danger-text)'}"><b>${money(p)}</b></td>
+      <td class="num"><span class="pill ${m>=0.15?'good':(m>=0.08?'warn':'bad')}">${pct(m)}</span></td></tr>`;}).join('');
+  s.innerHTML=`
+    <button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+    <div class="panel-head"><div><h2>Cost & Profit</h2><p>Full portfolio P&L. Every home rolls land, soft, hard, and selling costs against its sale price.</p></div></div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="k-label">Total cost basis</div><div class="k-val">${moneyK(totCost)}</div><div class="k-sub">land + soft + hard</div></div>
+      <div class="kpi"><div class="k-label">Total revenue</div><div class="k-val">${moneyK(totRev)}</div><div class="k-sub">list + sold</div></div>
+      <div class="kpi"><div class="k-label">Selling costs</div><div class="k-val">${moneyK(totSell)}</div><div class="k-sub">~6% of revenue</div></div>
+      <div class="kpi"><div class="k-label">Net profit</div><div class="k-val ${totProfit>=0?'good':'bad'}">${moneyK(totProfit)}</div><div class="k-sub">${pct(totRev?totProfit/totRev:0)} blended margin</div></div>
+    </div>
+    <div class="card"><h3>Profit by home</h3>
+      <table><thead><tr><th>Home</th><th>Stage</th><th class="num">Total cost</th><th class="num">Revenue</th><th class="num">Profit</th><th class="num">Margin</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td colspan="2">Portfolio</td><td class="num">${money(totCost)}</td><td class="num">${money(totRev)}</td><td class="num">${money(totProfit)}</td><td class="num">${pct(totRev?totProfit/totRev:0)}</td></tr></tfoot></table></div>`;
+}
+
+/* ---- TEAM & ACCESS (owner-only) ---- */
+async function renderAccess(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Team & Access'}]);
+  s.innerHTML=`<button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+    <div class="panel-head"><div><h2>Team &amp; Access</h2><p>Anyone listed here can sign in. The <b>Google</b> toggle decides who may use the &ldquo;Continue with Google&rdquo; button — turn it off to make an account password-only.</p></div></div>
+    <div id="accBody" class="card"><p class="muted">Loading…</p></div>
+    <div class="card"><h3>Add a login</h3>
+      <div class="field-row"><div><label>Email</label><input class="input" id="ac_email" placeholder="name@tolerhomes.com"></div>
+        <div><label>Name</label><input class="input" id="ac_name" placeholder="Full name"></div></div>
+      <div class="field-row"><div><label>Role</label><select id="ac_role"><option>pm</option><option>field</option><option>accounting</option><option>owner</option></select></div>
+        <div><label>Allow Google sign-in</label><select id="ac_google"><option value="true">Yes</option><option value="false">No</option></select></div></div>
+      <button class="btn" style="width:auto" onclick="acAdd()">Add login</button>
+    </div>
+    <div class="card"><h3>Allowed Google email domains <span class="muted" style="font-weight:400">(optional extra gate)</span></h3>
+      <p class="muted" style="margin-top:0">If set, a Google account must also end in one of these domains. Leave blank to allow any listed email. Comma-separated.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><input class="input" id="ac_domains" style="flex:1;min-width:220px" placeholder="tolerhomes.com, toler.dev">
+        <button class="btn-ghost" onclick="acSaveDomains()">Save domains</button></div>
+    </div>`;
+  acLoad();
+}
+async function acLoad(){
+  try{
+    const r=await fetch('/api/users'); const d=await r.json();
+    if(!d.ok){document.getElementById('accBody').innerHTML='<p class="muted">'+(d.error||'Could not load')+'</p>';return;}
+    document.getElementById('ac_domains').value=(d.allowed_domains||[]).join(', ');
+    const rows=d.users.map(u=>`<tr>
+      <td><b>${u.display_name||u.email}</b><div class="muted" style="font-size:11px">${u.email}</div></td>
+      <td>${u.role}</td>
+      <td>${u.active?'<span class="pill good">Active</span>':'<span class="pill">Disabled</span>'}</td>
+      <td><button class="pill ${u.google?'good':''}" style="cursor:pointer;border:none" onclick="acToggle('${u.email}','google',${!u.google})">${u.google?'Google: ON':'Google: OFF'}</button></td>
+      <td style="text-align:right">
+        <button class="btn-ghost" style="padding:5px 9px;font-size:12px" onclick="acToggle('${u.email}','active',${!u.active})">${u.active?'Disable':'Enable'}</button>
+        <button class="btn-ghost" style="padding:5px 9px;font-size:12px" onclick="acRemove('${u.email}')">Remove</button>
+      </td></tr>`).join('');
+    document.getElementById('accBody').innerHTML=`<h3>Logins in <b>${d.workspace}</b></h3>
+      <table><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Google sign-in</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+  }catch(e){ document.getElementById('accBody').innerHTML='<p class="muted">Server not reachable.</p>'; }
+}
+async function acToggle(email,key,val){ const b={email};b[key]=val; await fetch('/api/users',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}); acLoad(); }
+async function acRemove(email){ if(!confirm('Remove '+email+'?'))return; await fetch('/api/users?email='+encodeURIComponent(email),{method:'DELETE'}); acLoad(); }
+async function acAdd(){
+  const email=document.getElementById('ac_email').value.trim(); if(!email){return;}
+  await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    email, display_name:document.getElementById('ac_name').value.trim(),
+    role:document.getElementById('ac_role').value, google:document.getElementById('ac_google').value==='true'})});
+  document.getElementById('ac_email').value=''; document.getElementById('ac_name').value=''; acLoad();
+}
+async function acSaveDomains(){
+  const list=document.getElementById('ac_domains').value.split(',').map(x=>x.trim()).filter(Boolean);
+  await fetch('/api/workspace',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({allowed_domains:list})});
+  acLoad();
+}
+
+/* =================== EDIT / PERSISTENCE LAYER =================== */
+let CURRENT_HOME=null;
+async function loadHomesData(){ try{ const r=await fetch('/api/homes'); const d=await r.json(); if(d.ok&&Array.isArray(d.homes)) HOMES=d.homes; }catch(e){} }
+function cardHdr(t,l,fn){return `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px"><h3 style="margin:0">${t}</h3><button class="btn-ghost" style="padding:6px 11px;font-size:12.5px;white-space:nowrap" onclick="${fn}">${l}</button></div>`;}
+function openModal(title,bodyHTML,onSave,saveLabel){
+  document.getElementById('modalBox').innerHTML=`<h3>${title}</h3>${bodyHTML}<div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn" style="width:auto" id="modalSave">${saveLabel||'Save'}</button></div>`;
+  document.getElementById('modalBack').classList.add('show');
+  document.getElementById('modalSave').onclick=async function(){ this.disabled=true; try{ await onSave(); } finally { this.disabled=false; } };
+}
+function closeModal(){document.getElementById('modalBack').classList.remove('show');}
+function mv(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+async function post(url,body,method){const r=await fetch(url,{method:method||'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});return r.json();}
+async function reloadHome(){ await loadHomesData(); renderHome(document.getElementById('stage'),CURRENT_HOME); }
+function fld(label,id,val,ph){return `<div><label>${label}</label><input class="input" id="${id}" value="${val==null?'':val}" placeholder="${ph||''}"></div>`;}
+function selFld(label,id,opts,sel){return `<div><label>${label}</label><select id="${id}">${opts.map(o=>`<option ${o===sel?'selected':''}>${o}</option>`).join('')}</select></div>`;}
+
+function newHomeForm(pre){ pre=pre||{};
+  openModal('Add home / property',
+    `<div class="field-row">${fld('Name','nh_name',pre.name||'','Skyline Modern')}${fld('Address','nh_addr',pre.address||'','Street, City CA')}</div>
+     <div class="field-row">${selFld('Stage','nh_stage',STAGES,pre.stage||'Underwriting')}${fld('Lot / APN','nh_lot',pre.lot||'')}</div>
+     <div class="field-row">${fld('Size (sf)','nh_sqft',pre.sqft||'4000')}${fld('Beds / baths','nh_beds',pre.beds||'5')}</div>
+     <div class="field-row">${fld('Land price','nh_land',pre.land||'')}${fld('Closing costs','nh_close',pre.close||'')}</div>
+     <div class="field-row">${fld('Target sale price','nh_price',pre.price||'')}${fld('Target list date','nh_tlist',pre.tlist||'','2026-12-01')}</div>
+     ${pre.hardEstimate?`<div class="muted" style="font-size:12px">Locks in the analyzed build estimate (${money(pre.hardEstimate)}) plus soft + carry from the deal analyzer. You can refine these in Budget later.</div>`:''}`,
+    async()=>{ const d=await post('/api/homes',{name:mv('nh_name'),address:mv('nh_addr'),stage:mv('nh_stage'),lot:mv('nh_lot'),sqft:mv('nh_sqft'),beds:mv('nh_beds'),baths:mv('nh_beds'),land:mv('nh_land'),landClosing:mv('nh_close'),listPrice:mv('nh_price'),targetList:mv('nh_tlist'),softDesign:pre.softDesign||'',softCarry:pre.softCarry||'',hardEstimate:pre.hardEstimate||''});
+      if(d.ok){ await loadHomesData(); closeModal(); go('home',d.home.id); } },'Add home');
+}
+function addDealAsProperty(){
+  const g=id=>parseFloat((document.getElementById(id)||{}).value)||0;
+  const land=g('pf_land'), close=g('pf_close'), sf=g('pf_sf'), psf=g('pf_psf'), softpct=g('pf_soft'), carry=g('pf_carry'), arv=g('pf_arv');
+  const hard=sf*psf; const softDesign=hard*(softpct/100);
+  newHomeForm({stage:'Underwriting',sqft:sf||'',land:land||'',close:close||'',price:arv||'',softDesign:softDesign||'',softCarry:carry||'',hardEstimate:hard||''});
+}
+function addSubForm(idx,item){ const e=item||{};
+  openModal((item?'Edit':'Add')+' subcontractor',
+   `<div class="field-row">${fld('Trade','s_trade',e.trade||'','Framing')}${fld('Company','s_co',e.co||'','Summit Framers')}</div>
+    <div class="field-row">${fld('Contract value','s_val',e.value||'')}${selFld('Status','s_status',['Bidding','Contracted','Scheduled','In progress','Complete'],e.status||'Contracted')}</div>`,
+   async()=>{ const body={trade:mv('s_trade'),co:mv('s_co'),value:mv('s_val'),status:mv('s_status')}; const d=item?await saveItem('subs',idx,body):await post('/api/homes/sub',Object.assign({id:CURRENT_HOME},body)); if(d.ok){closeModal();reloadHome();} },item?'Save':'Add sub'); }
+function addPOForm(idx,item){ const e=item||{};
+  openModal((item?'Edit':'Add')+' purchase order',
+   `<div class="field-row">${fld('PO #','p_po',e.po||'','PO-1100')}${fld('Vendor','p_vendor',e.vendor||'','ProBuild Lumber')}</div>
+    <div class="field-row">${fld('Item','p_item',e.item||'','Framing package')}${fld('Amount','p_amt',e.amount||'')}</div>
+    <div class="field-row">${selFld('Status','p_status',['Ordered','Partial','Delivered','Closed'],e.status||'Ordered')}<div></div></div>`,
+   async()=>{ const body={po:mv('p_po'),vendor:mv('p_vendor'),item:mv('p_item'),amount:mv('p_amt'),status:mv('p_status')}; const d=item?await saveItem('materials',idx,body):await post('/api/homes/po',Object.assign({id:CURRENT_HOME},body)); if(d.ok){closeModal();reloadHome();} },item?'Save':'Add PO'); }
+function addInspectionForm(idx,item){ const e=item||{};
+  openModal((item?'Edit':'Add')+' inspection / permit',
+   `<div class="field-row">${fld('Type','i_type',e.type||'','Rough Framing')}${fld('Date (YYYY-MM-DD)','i_date',e.date||'','2026-06-01')}</div>
+    <div class="field-row">${selFld('Result','i_status',['Pending','Scheduled','In review','Passed','Failed'],e.status||'Scheduled')}<div></div></div>`,
+   async()=>{ const body={type:mv('i_type'),date:mv('i_date'),status:mv('i_status')}; const d=item?await saveItem('inspections',idx,body):await post('/api/homes/inspection',Object.assign({id:CURRENT_HOME},body)); if(d.ok){closeModal();reloadHome();} },item?'Save':'Add'); }
+function editListingForm(){ const h=HOMES.find(x=>x.id===CURRENT_HOME); const l=h.listing||{};
+  openModal('Edit listing & sale',
+  `<div class="field-row">${selFld('Status','l_status',['Not listed','Coming Soon','Listed','Offer Received','Buyer Under Contract','In Escrow','Sold','Withdrawn'],l.status||'Not listed')}${selFld('Stage','l_stage',STAGES,stageOf(h))}</div>
+   <div class="field-row">${fld('Current list price','l_list',num(l.currentListPrice)||num(l.listPrice)||'')}${fld('List date','l_ldate',l.listDate||'')}</div>
+   <div class="field-row">${fld('Accepted offer','l_offer',l.acceptedOfferPrice||'')}${fld('Sale price','l_sale',l.salePrice||'')}</div>
+   <div class="field-row">${fld('Commission %','l_comm',l.commissionPercent||'6')}${fld('Seller concessions','l_conc',l.sellerConcessions||'')}</div>
+   <div class="field-row">${fld('Closing costs','l_close',l.closingCosts||'')}${fld('Loan payoff','l_payoff',l.loanPayoff||'')}</div>
+   <div class="field-row">${fld('Close date','l_cdate',l.closeDate||'')}${fld('Agent','l_agent',l.agent||'')}</div>`,
+  async()=>{ const d=await post('/api/homes/listing',{id:CURRENT_HOME,status:mv('l_status'),stage:mv('l_stage'),currentListPrice:mv('l_list'),listPrice:mv('l_list'),listDate:mv('l_ldate'),acceptedOfferPrice:mv('l_offer'),salePrice:mv('l_sale'),commissionPercent:mv('l_comm'),sellerConcessions:mv('l_conc'),closingCosts:mv('l_close'),loanPayoff:mv('l_payoff'),closeDate:mv('l_cdate'),agent:mv('l_agent')},'PATCH'); if(d.ok){closeModal();reloadHome();} },'Save'); }
+
+/* =================== NEW LIFECYCLE MODULES =================== */
+function selPill(st){const m={'Selected':'accent','Installed':'good','Open':'warn','Closed':'good'};return `<span class="pill ${m[st]||''}">${st}</span>`;}
+function coPill(st){const m={'Approved':'good','Pending':'warn','Rejected':'bad'};return `<span class="pill ${m[st]||''}">${st}</span>`;}
+function drawPill(st){const m={'Funded':'good','Requested':'warn','Approved':'accent'};return `<span class="pill ${m[st]||''}">${st}</span>`;}
+
+/* ---- DESIGN & SELECTIONS tab ---- */
+function designTab(h){
+  const d=h.design||{}; const plans=h.plans||[]; const sel=h.selections||[]; const over=selectionOver(h);
+  return `<div class="grid-2">
+    <div class="card">${cardHdr('Design &amp; team','Edit','editDesignForm()')}
+      <div class="pf-line"><span class="muted">Architect</span><span>${d.architect||'—'}</span></div>
+      <div class="pf-line"><span class="muted">Interior designer</span><span>${d.designer||'—'}</span></div>
+      <div class="pf-line"><span class="muted">Plans status</span><span>${d.plansStatus||'—'}</span></div>
+      <div class="pf-line"><span class="muted">Selections</span><span>${d.selectionsStatus||'—'}</span></div>
+    </div>
+    <div class="card"><h3 style="margin:0 0 12px">Approved construction plans</h3>
+      ${plans.length?plans.map(p=>`<div class="pf-line"><a href="${p.url}" target="_blank">${p.name}</a><span class="muted">${(p.size/1048576).toFixed(1)} MB &middot; ${p.uploadedAt}</span></div>`).join(''):'<p class="muted" style="margin-top:0">No plans uploaded yet.</p>'}
+      <label class="btn btn-ghost" style="margin-top:14px;display:inline-flex;cursor:pointer">Upload approved plans
+        <input type="file" style="display:none" onchange="uploadPlan(event)" accept=".pdf,.png,.jpg,.jpeg,.dwg,.zip">
+      </label>
+    </div></div>
+  <div class="card">${cardHdr('Builder finish selections','+ Add selection','addSelectionForm()')}
+    ${sel.length?`<table><thead><tr><th>Category</th><th>Item</th><th class="num">Allowance</th><th class="num">Actual</th><th class="num">Over/(under)</th><th>Status</th><th></th></tr></thead><tbody>
+    ${sel.map((x,i)=>{const dv=(x.actual||0)-(x.allowance||0);return `<tr><td>${x.category}</td><td>${x.item}</td><td class="num">${money(x.allowance)}</td><td class="num">${x.actual?money(x.actual):'—'}</td><td class="num" style="color:${dv>0?'var(--danger-text)':(dv<0?'var(--good-text)':'inherit')}">${dv?money(dv):'—'}</td><td>${selPill(x.status)}</td>${rowActions('selections',i)}</tr>`;}).join('')}
+    </tbody><tfoot><tr><td colspan="4">Selection overage (adds to cost)</td><td class="num" style="color:${over>0?'var(--danger-text)':'inherit'}">${money(over)}</td><td colspan="2"></td></tr></tfoot></table>`:'<p class="muted">No selections logged yet.</p>'}
+  </div>`;
+}
+async function uploadPlan(ev){
+  const file=ev.target.files[0]; if(!file)return;
+  const url='/api/homes/plan-upload?id='+encodeURIComponent(CURRENT_HOME)+'&name='+encodeURIComponent(file.name);
+  try{ const r=await fetch(url,{method:'POST',body:file}); const d=await r.json(); if(d.ok){reloadHome();} else {alert('Upload failed: '+(d.error||'error'));} }
+  catch(e){ alert('Upload failed — is the server running?'); }
+}
+function editDesignForm(){const h=HOMES.find(x=>x.id===CURRENT_HOME);const d=h.design||{};
+  openModal('Edit design &amp; team',
+   `<div class="field-row">${fld('Architect','d_arch',d.architect||'')}${fld('Interior designer','d_des',d.designer||'')}</div>
+    <div class="field-row">${selFld('Plans status','d_plans',['Not started','In progress (DD)','Construction documents','Permitted','Plans on file','Complete'],d.plansStatus||'Not started')}${selFld('Selections','d_sel',['Open','In progress','Closed'],d.selectionsStatus||'Open')}</div>`,
+   async()=>{const r=await post('/api/homes/design',{id:CURRENT_HOME,architect:mv('d_arch'),designer:mv('d_des'),plansStatus:mv('d_plans'),selectionsStatus:mv('d_sel')},'PATCH');if(r.ok){closeModal();reloadHome();}},'Save');}
+function addSelectionForm(idx,item){const e=item||{};openModal((item?'Edit':'Add')+' selection',
+  `<div class="field-row">${fld('Category','sl_cat',e.category||'','Kitchen')}${fld('Item','sl_item',e.item||'','Appliance package')}</div>
+   <div class="field-row">${fld('Allowance','sl_allow',e.allowance||'')}${fld('Actual','sl_actual',e.actual||'')}</div>
+   <div class="field-row">${selFld('Status','sl_status',['Open','Selected','Installed','Closed'],e.status||'Open')}<div></div></div>`,
+  async()=>{const body={category:mv('sl_cat'),item:mv('sl_item'),allowance:mv('sl_allow'),actual:mv('sl_actual'),status:mv('sl_status')};const r=item?await saveItem('selections',idx,body):await post('/api/homes/selection',Object.assign({id:CURRENT_HOME},body));if(r.ok){closeModal();reloadHome();}},item?'Save':'Add');}
+
+/* ---- SCHEDULE tab (with AI build) ---- */
+function scheduleTab(h){
+  const sch=h.schedule||[]; let bars='';
+  if(sch.length){
+    const ds=sch.flatMap(m=>[m.start,m.end]).filter(Boolean).map(d=>new Date(d).getTime());
+    const min=Math.min(...ds),max=Math.max(...ds),span=Math.max(1,max-min);
+    bars=sch.map((m,i)=>{const a=m.start?new Date(m.start).getTime():min,b=m.end?new Date(m.end).getTime():a;
+      const left=(a-min)/span*100,w=Math.max(2,(b-a)/span*100);
+      const cls=/complete/i.test(m.status)?'good':(/progress/i.test(m.status)?'':'warn');
+      return `<div style="display:grid;grid-template-columns:250px 1fr;gap:12px;align-items:center;margin-bottom:9px">
+        <div style="font-size:13px"><b>${m.name}</b> <button class="rowbtn" onclick="editItem('schedule',${i})">Edit</button><button class="rowbtn del" onclick="deleteItem('schedule',${i})">&times;</button><div class="muted" style="font-size:11px">${m.start||'—'} → ${m.end||'—'} &middot; ${m.status}</div></div>
+        <div class="bar-track" style="height:14px;position:relative"><div class="bar-fill ${cls}" style="position:absolute;left:${left}%;width:${w}%;height:100%"></div></div></div>`;}).join('');
+  }
+  return `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap">
+      <h3 style="margin:0">Construction schedule</h3>
+      <div style="display:flex;gap:8px">
+        <button class="btn" style="width:auto" onclick="aiBuildSchedule()">&#10024; AI build schedule</button>
+        <button class="btn-ghost" style="padding:6px 11px;font-size:12.5px" onclick="addMilestoneForm()">+ Add phase</button>
+      </div></div>
+    ${sch.length?bars:'<p class="muted">No schedule yet. Click <b>AI build schedule</b> to generate one from the design and home size.</p>'}
+    <p class="muted" style="font-size:11.5px;margin-top:14px">AI build reads the home size, plan status, and open selections. ${AI_LIVE?'Using your configured Claude model.':'Rules-based fallback — add an Anthropic key (anthropic.json) to use a live model.'}</p>
+  </div>`;
+}
+async function aiBuildSchedule(){
+  if(!confirm('Build or replace the schedule with an AI-generated plan based on this home design and size?'))return;
+  const r=await post('/api/homes/ai-schedule',{id:CURRENT_HOME}); if(r.ok){reloadHome();} else {alert('Could not build schedule.');}
+}
+function addMilestoneForm(idx,item){const e=item||{};openModal((item?'Edit':'Add')+' schedule phase',
+  `<div class="field-row">${fld('Phase name','m_name',e.name||'','Framing')}${selFld('Status','m_status',['Not started','In progress','Complete'],e.status||'Not started')}</div>
+   <div class="field-row">${fld('Start (YYYY-MM-DD)','m_start',e.start||'')}${fld('End (YYYY-MM-DD)','m_end',e.end||'')}</div>`,
+  async()=>{const body={name:mv('m_name'),start:mv('m_start'),end:mv('m_end'),status:mv('m_status')};const r=item?await saveItem('schedule',idx,body):await post('/api/homes/milestone',Object.assign({id:CURRENT_HOME},body));if(r.ok){closeModal();reloadHome();}},item?'Save':'Add');}
+
+/* ---- CHANGE ORDERS tab ---- */
+function changesTab(h){
+  const co=h.changeOrders||[]; const appr=approvedCO(h); const pend=co.filter(c=>/pend/i.test(c.status||'')).reduce((a,c)=>a+(c.amount||0),0);
+  return `<div class="card">${cardHdr('Change orders','+ Add change order','addChangeOrderForm()')}
+   ${co.length?`<table><thead><tr><th>CO #</th><th>Description</th><th class="num">Amount</th><th>Status</th><th>Date</th><th></th></tr></thead><tbody>
+   ${co.map((c,i)=>`<tr><td>${c.co}</td><td>${c.description}</td><td class="num">${money(c.amount)}</td><td>${coPill(c.status)}</td><td>${c.date||'—'}</td>${rowActions('changeOrders',i)}</tr>`).join('')}
+   </tbody><tfoot><tr><td colspan="2">Approved (in P&amp;L)</td><td class="num">${money(appr)}</td><td colspan="3" class="muted">Pending: ${money(pend)}</td></tr></tfoot></table>`:'<p class="muted">No change orders.</p>'}
+  </div>`;
+}
+function addChangeOrderForm(idx,item){const e=item||{};openModal((item?'Edit':'Add')+' change order',
+  `<div class="field-row">${fld('CO #','co_no',e.co||'','CO-004')}${selFld('Status','co_status',['Pending','Approved','Rejected'],e.status||'Pending')}</div>
+   <div style="margin-bottom:12px">${fld('Description','co_desc',e.description||'','Scope change').slice(5)}</div>
+   <div class="field-row">${fld('Amount','co_amt',e.amount||'')}${fld('Date','co_date',e.date||'')}</div>`,
+  async()=>{const body={co:mv('co_no'),description:mv('co_desc'),amount:mv('co_amt'),status:mv('co_status'),date:mv('co_date')};const r=item?await saveItem('changeOrders',idx,body):await post('/api/homes/changeorder',Object.assign({id:CURRENT_HOME},body));if(r.ok){closeModal();reloadHome();}},item?'Save':'Add');}
+
+/* ---- FINANCING & DRAWS tab ---- */
+function financingTab(h){
+  const fin=h.financing||{}; const draws=h.draws||[]; const drawn=draws.filter(d=>/fund/i.test(d.status||'')).reduce((a,d)=>a+(d.amount||0),0);
+  return `<div class="grid-2">
+   <div class="card">${cardHdr('Construction loan','Edit','editFinancingForm()')}
+    <div class="pf-line"><span class="muted">Lender</span><span>${fin.lender||'—'}</span></div>
+    <div class="pf-line"><span class="muted">Loan amount</span><span>${money(fin.loanAmount)}</span></div>
+    <div class="pf-line"><span class="muted">Rate</span><span>${fin.rate?fin.rate+'%':'—'}</span></div>
+    <div class="pf-line"><span class="muted">Funded to date</span><span>${money(drawn)}</span></div>
+    <div class="bar-track" style="margin-top:10px"><div class="bar-fill" style="width:${fin.loanAmount?Math.min(100,drawn/fin.loanAmount*100):0}%"></div></div>
+   </div>
+   <div class="card">${cardHdr('Draws','+ Add draw','addDrawForm()')}
+    ${draws.length?`<table><thead><tr><th>Draw</th><th class="num">Amount</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
+    ${draws.map((d,i)=>`<tr><td>${d.num}</td><td class="num">${money(d.amount)}</td><td>${d.date||'—'}</td><td>${drawPill(d.status)}</td>${rowActions('draws',i)}</tr>`).join('')}</tbody></table>`:'<p class="muted">No draws yet.</p>'}
+   </div></div>`;
+}
+function editFinancingForm(){const h=HOMES.find(x=>x.id===CURRENT_HOME);const fin=h.financing||{};
+  openModal('Edit construction loan',
+   `<div class="field-row">${fld('Lender','f_lender',fin.lender||'')}${fld('Loan amount','f_amt',fin.loanAmount||'')}</div>
+    <div class="field-row">${fld('Rate (%)','f_rate',fin.rate||'')}<div></div></div>`,
+   async()=>{const r=await post('/api/homes/financing',{id:CURRENT_HOME,lender:mv('f_lender'),loanAmount:mv('f_amt'),rate:mv('f_rate')},'PATCH');if(r.ok){closeModal();reloadHome();}},'Save');}
+function addDrawForm(idx,item){const e=item||{};openModal((item?'Edit':'Add')+' draw',
+  `<div class="field-row">${fld('Draw label','dr_num',e.num||'','Draw 5')}${fld('Amount','dr_amt',e.amount||'')}</div>
+   <div class="field-row">${fld('Date','dr_date',e.date||'')}${selFld('Status','dr_status',['Requested','Approved','Funded'],e.status||'Requested')}</div>`,
+  async()=>{const body={num:mv('dr_num'),amount:mv('dr_amt'),date:mv('dr_date'),status:mv('dr_status')};const r=item?await saveItem('draws',idx,body):await post('/api/homes/draw',Object.assign({id:CURRENT_HOME},body));if(r.ok){closeModal();reloadHome();}},item?'Save':'Add');}
+
+/* ---- CLOSEOUT tab ---- */
+function closeoutTab(h){
+  const co=h.closeout||[];
+  return `<div class="card">${cardHdr('Closeout checklist','+ Add item','addCloseoutForm()')}
+   ${co.length?`<table><thead><tr><th>Item</th><th>Status</th><th>Date</th><th></th></tr></thead><tbody>
+   ${co.map((c,i)=>`<tr><td>${c.item}</td><td>${inspPill(c.status==='Complete'?'Passed':'Pending')} ${c.status}</td><td>${c.date||'—'}</td>${rowActions('closeout',i)}</tr>`).join('')}</tbody></table>`:'<p class="muted">No closeout items yet. Typical: Certificate of Occupancy, final lien releases, warranties, as-builts.</p>'}
+  </div>`;
+}
+function addCloseoutForm(idx,item){const e=item||{};openModal((item?'Edit':'Add')+' closeout item',
+  `<div style="margin-bottom:12px">${fld('Item','cl_item',e.item||'','Certificate of Occupancy').slice(5)}</div>
+   <div class="field-row">${selFld('Status','cl_status',['Pending','In progress','Complete'],e.status||'Pending')}${fld('Date','cl_date',e.date||'')}</div>`,
+  async()=>{const body={item:mv('cl_item'),status:mv('cl_status'),date:mv('cl_date')};const r=item?await saveItem('closeout',idx,body):await post('/api/homes/closeout',Object.assign({id:CURRENT_HOME},body));if(r.ok){closeModal();reloadHome();}},item?'Save':'Add');}
+
+/* ---- PORTFOLIO MODULE VIEWS (hub tiles) ---- */
+function renderDesignModule(s){setCrumbs([{label:'Home',view:'hub'},{label:'Design & Selections'}]);moduleHead(s,'Design & Selections','Plan status and selection overages across the portfolio.');
+  const rows=HOMES.map(h=>{const d=h.design||{};const over=selectionOver(h);return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${d.plansStatus||'—'}</td><td>${(h.plans||[]).length} file(s)</td><td>${(h.selections||[]).length}</td><td class="num" style="color:${over>0?'var(--danger-text)':'inherit'}">${money(over)}</td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Plans status</th><th>On file</th><th>Selections</th><th class="num">Overage</th></tr></thead><tbody>${rows}</tbody></table></div>`;}
+function renderScheduleModule(s){setCrumbs([{label:'Home',view:'hub'},{label:'Schedule'}]);moduleHead(s,'Schedule','Construction timelines across the portfolio. Open a home to AI-build or edit.');
+  const rows=HOMES.map(h=>{const sch=h.schedule||[];const next=sch.find(m=>!/complete/i.test(m.status||''));return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${stagePill(h.stage)}</td><td>${sch.length} phases</td><td>${next?next.name+' ('+(next.start||'—')+')':'—'}</td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Stage</th><th>Schedule</th><th>Next phase</th></tr></thead><tbody>${rows}</tbody></table></div>`;}
+function renderChangesModule(s){setCrumbs([{label:'Home',view:'hub'},{label:'Change Orders'}]);moduleHead(s,'Change Orders','Approved and pending change orders across the portfolio.');
+  let tot=0;const rows=HOMES.map(h=>{const a=approvedCO(h);tot+=a;const co=h.changeOrders||[];const pend=co.filter(c=>/pend/i.test(c.status||'')).reduce((x,c)=>x+(c.amount||0),0);return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${co.length}</td><td class="num">${money(a)}</td><td class="num muted">${money(pend)}</td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>COs</th><th class="num">Approved</th><th class="num">Pending</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="2">Approved change orders (in P&L)</td><td class="num">${money(tot)}</td><td></td></tr></tfoot></table></div>`;}
+function renderFinancingModule(s){setCrumbs([{label:'Home',view:'hub'},{label:'Financing & Draws'}]);moduleHead(s,'Financing & Draws','Construction loans and funded draws across the portfolio.');
+  const rows=HOMES.map(h=>{const f=h.financing||{};const drawn=(h.draws||[]).filter(d=>/fund/i.test(d.status||'')).reduce((a,d)=>a+(d.amount||0),0);return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${f.lender||'—'}</td><td class="num">${money(f.loanAmount)}</td><td class="num">${money(drawn)}</td><td>${f.rate?f.rate+'%':'—'}</td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Lender</th><th class="num">Loan</th><th class="num">Funded</th><th>Rate</th></tr></thead><tbody>${rows}</tbody></table></div>`;}
+function renderCloseoutModule(s){setCrumbs([{label:'Home',view:'hub'},{label:'Closeout'}]);moduleHead(s,'Closeout','Closeout progress across the portfolio.');
+  const rows=HOMES.map(h=>{const c=h.closeout||[];const done=c.filter(x=>/complete/i.test(x.status||'')).length;return `<tr onclick="go('home','${h.id}')" style="cursor:pointer"><td><b>${h.name}</b></td><td>${stagePill(h.stage)}</td><td>${done} / ${c.length} complete</td></tr>`;}).join('');
+  document.getElementById('modBody').innerHTML=`<div class="card"><table><thead><tr><th>Home</th><th>Stage</th><th>Closeout</th></tr></thead><tbody>${rows}</tbody></table></div>`;}
+
+/* =================== ROW EDIT / DELETE HELPERS =================== */
+let AI_LIVE=false;
+function rowActions(field,i){return `<td style="text-align:right;white-space:nowrap"><button class="rowbtn" onclick="editItem('${field}',${i})">Edit</button><button class="rowbtn del" onclick="deleteItem('${field}',${i})">&times;</button></td>`;}
+function editItem(field,i){const h=HOMES.find(x=>x.id===CURRENT_HOME);const item=(h[field]||[])[i];const map={subs:addSubForm,materials:addPOForm,inspections:addInspectionForm,selections:addSelectionForm,changeOrders:addChangeOrderForm,schedule:addMilestoneForm,draws:addDrawForm,closeout:addCloseoutForm};(map[field]||function(){})(i,item);}
+async function saveItem(field,i,patch){return post('/api/homes/item',{id:CURRENT_HOME,field,index:i,patch},'PATCH');}
+async function deleteItem(field,i){const lbl={subs:'subcontractor',materials:'purchase order',inspections:'inspection',selections:'selection',changeOrders:'change order',schedule:'phase',draws:'draw',closeout:'closeout item'}[field]||'row';if(!confirm('Delete this '+lbl+'?'))return;try{const r=await fetch('/api/homes/item?id='+encodeURIComponent(CURRENT_HOME)+'&field='+field+'&index='+i,{method:'DELETE'});const d=await r.json();if(d.ok)reloadHome();else alert('Delete failed');}catch(e){alert('Server not reachable');}}
+function editBudgetForm(i){const h=HOMES.find(x=>x.id===CURRENT_HOME);const b=(h.budget||[])[i];if(!b)return;
+  openModal('Edit budget — '+b.div,
+   `<div class="field-row">${fld('Budget','bd_b',b.budget||'')}${fld('Committed','bd_c',b.committed||'')}</div>
+    <div class="field-row">${fld('Actual','bd_a',b.actual||'')}<div></div></div>`,
+   async()=>{const r=await post('/api/homes/budget',{id:CURRENT_HOME,div:b.div,budget:mv('bd_b'),committed:mv('bd_c'),actual:mv('bd_a')},'PATCH');if(r.ok){closeModal();reloadHome();}},'Save');}
+
+/* =================== WORKSPACE PICKER =================== */
+function showPicker(email,workspaces){
+  document.getElementById('loginView').classList.add('hidden');
+  document.getElementById('appView').classList.add('hidden');
+  const v=document.getElementById('wsPickerView'); v.classList.remove('hidden'); v.style.display='flex';
+  const e=document.getElementById('wsPickerEmail'); if(e) e.textContent=email||'';
+  document.getElementById('wsPickerList').innerHTML=(workspaces||[]).map(w=>`
+    <button onclick="selectWorkspace('${w.slug}')" style="display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:15px 16px;margin-bottom:10px;cursor:pointer;box-shadow:var(--shadow-sm)">
+      <span class="login-mark" style="width:38px;height:38px">${svg(IC.land)}</span>
+      <span style="flex:1;font-weight:700;font-size:15px;color:var(--ink)">${w.display_name}</span>
+      <span style="color:var(--ink-3)">${svg(IC.arrow)}</span>
+    </button>`).join('');
+}
+async function selectWorkspace(slug){
+  try{
+    const r=await fetch('/api/select-workspace',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({workspace:slug})});
+    const d=await r.json();
+    if(d.ok){ enterApp(d.user); } else { alert('Could not open that workspace.'); }
+  }catch(e){ alert('Server not reachable.'); }
+}
+async function switchWorkspace(){
+  try{
+    const r=await fetch('/api/my-workspaces'); const d=await r.json();
+    if(d.ok && d.workspaces.length>1){ document.getElementById('appView').classList.add('hidden'); showPicker(d.email,d.workspaces); }
+  }catch(e){}
+}
+/* restore session / handle Google redirect on load */
+(function init(){
+  try{ const p=new URLSearchParams(location.search); if(p.get('error')==='not_authorized'){ loginErr('That Google account is not authorized for any workspace.'); } }catch(e){}
+  fetch('/api/me').then(r=>r.json()).then(d=>{
+    if(d&&d.ok&&d.pending){ showPicker(d.email,d.workspaces); }
+    else if(d&&d.ok&&d.user){ enterApp(d.user); }
+  }).catch(()=>{});
+})();
+
+/* =================== FINANCIAL ENGINE =================== */
+function daysBetween(a,b){if(!a||!b)return 0;const d=Math.round((new Date(b)-new Date(a))/86400000);return isFinite(d)?d:0;}
+const SEV={critical:0,atrisk:1,watch:2};
+function riskPill(st,alerts){const m={'Healthy':'good','Watch':'warn','At Risk':'accent','Critical':'bad'};const tip=(alerts&&alerts.length)?(st+' \u2014 '+alerts.length+' flag'+(alerts.length>1?'s':'')+':\n\u2022 '+alerts.map(a=>a.msg).join('\n\u2022 ')):(st==='Healthy'?'No risk flags \u2014 this deal looks healthy.':st+' status');return `<span class="pill riskpill ${m[st]||''}" title="${String(tip).replace(/"/g,'&quot;')}">${st}</span>`;}
+function sevPill(sev){const m={critical:['bad','Critical'],atrisk:['accent','At risk'],watch:['warn','Watch']}[sev]||['','Note'];return `<span class="pill ${m[0]}" style="font-size:10.5px">${m[1]}</span>`;}
+function calcFin(h){
+  h=h||{}; const l=h.listing||{}; const fin=h.financing||{};
+  const land=landTotal(h); const softT=softTotal(h);
+  const hard=(h.budget||[]).reduce((a,b)=>a+Math.max(num(b.budget),num(b.committed),num(b.actual)),0);
+  const co=approvedCO(h);
+  const pendCO=(h.changeOrders||[]).filter(c=>/pend|draft/i.test(c.status||'')).reduce((a,c)=>a+num(c.amount),0);
+  const selOver=selectionOver(h);
+  const carry=num(fin.interestCarryToDate)+num(fin.projectedInterestCarry);
+  const projectedCost=land+softT+hard+co+selOver+carry;
+  const rev=revenue(h); const selling=sellingCosts(h);
+  const projectedProfit=rev-projectedCost-selling;
+  const margin=rev?projectedProfit/rev:0;
+  const origRev=(h.forecast&&num(h.forecast.targetSalePrice))||num(l.listPrice)||rev;
+  const origHard=(h.budget||[]).reduce((a,b)=>a+num(b.budget),0);
+  const origProfit=(h.proForma&&h.proForma.originalProjectedProfit!=null)?num(h.proForma.originalProjectedProfit):(origRev-(land+softT+origHard)-origRev*0.06);
+  const drift=projectedProfit-origProfit; const driftPct=origProfit?drift/origProfit:0;
+  const loanPayoff=num(fin.payoffAtSale)||num(l.loanPayoff)||num(fin.loanBalance);
+  const cashAtClosing=rev-selling-loanPayoff;
+  const sold=/sold|closed/i.test(l.status||'');
+  const hb=hardBudget(h),ha=hardActual(h);
+  const dom=num(l.daysOnMarket)||(l.listDate?daysBetween(l.listDate,l.closeDate||new Date().toISOString().slice(0,10)):0);
+  let risk=0; const alerts=[]; const al=(sev,msg,impact)=>alerts.push({sev,msg,impact:impact||0});
+  if(!rev){risk+=20;al('critical','Target sale price is missing, so margin cannot be trusted.');}
+  if(!land){risk+=15;al('atrisk','Land basis is missing, so projected profit is incomplete.');}
+  if(rev){ if(margin<0.10){risk+=35;al('critical','Projected margin is '+pct(margin)+', below the 10% floor.');}
+    else if(margin<0.15){risk+=20;al('atrisk','Projected margin is '+pct(margin)+', below the 15% target.');}
+    else if(margin<0.20){risk+=10;al('watch','Projected margin is '+pct(margin)+', under 20%.');} }
+  if(drift<-25000){risk+=15;al('watch','Profit drifted down '+money(Math.abs(drift))+' from the original pro forma.',drift);}
+  if(origProfit&&driftPct<-0.20){risk+=15;}
+  if(pendCO>10000){risk+=10;al('watch','Pending change orders total '+money(pendCO)+' — not in official profit until approved.',-pendCO);}
+  if(selOver>5000){risk+=10;al('watch','Finish selections are '+money(selOver)+' over allowance.',-selOver);}
+  if(ha>hb){risk+=15;al('watch','Actual hard cost exceeds budget by '+money(ha-hb)+'.',-(ha-hb));}
+  if(dom>90){risk+=25;al('atrisk','Listed '+dom+' days — review pricing or staging.');}
+  else if(dom>45){risk+=10;al('watch','Listed '+dom+' days.');}
+  const status=risk>=70?'Critical':risk>=40?'At Risk':risk>=20?'Watch':'Healthy';
+  alerts.sort((a,b)=>SEV[a.sev]-SEV[b.sev]);
+  return {land,softT,hard,co,pendCO,selOver,carry,projectedCost,revenue:rev,selling,projectedProfit,margin,origProfit,drift,driftPct,loanPayoff,cashAtClosing,sold,hb,ha,dom,riskScore:risk,riskStatus:status,alerts};
+}
+function marginWatchCount(){return (HOMES||[]).reduce((a,h)=>a+calcFin(h).alerts.length,0);}
+
+/* ---- EXECUTIVE DASHBOARD ---- */
+function renderDashboard(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Executive Dashboard'}]);
+  const F=HOMES.map(h=>({h,f:calcFin(h)}));
+  const sum=sel=>F.reduce((a,x)=>a+sel(x),0);
+  const rev=sum(x=>x.f.revenue),cost=sum(x=>x.f.projectedCost),prof=sum(x=>x.f.projectedProfit);
+  const margin=rev?prof/rev:0;
+  const byStage=re=>HOMES.filter(h=>re.test(stageOf(h))).length;
+  const sold=byStage(/Sold/);
+  const below=F.filter(x=>x.f.revenue&&x.f.margin<0.15).length;
+  const atRisk=F.filter(x=>x.f.riskScore>=40).sort((a,b)=>b.f.riskScore-a.f.riskScore).slice(0,5);
+  const kc=(label,val,sub,cls)=>`<div class="kpi"><div class="k-label">${label}</div><div class="k-val ${cls||''}">${val}</div>${sub?`<div class="k-sub">${sub}</div>`:''}</div>`;
+  s.innerHTML=`
+   <button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+   <div class="panel-head"><div><h2>Executive Dashboard</h2><p>Portfolio health across every active development.</p></div></div>
+   <div class="kpi-row">
+     ${kc('Active projects',HOMES.length,byStage(/Construction|Pre-Construction|Design|Permitting/)+' in build')}
+     ${kc('Projected revenue',moneyK(rev),'list + sold')}
+     ${kc('Projected profit',moneyK(prof),pct(margin)+' blended margin',prof>=0?'good':'bad')}
+     ${kc('Homes below 15%',below,below?'need attention':'all healthy',below?'bad':'good')}
+   </div>
+   <div class="kpi-row">
+     ${kc('On market',byStage(/Listed|Escrow|Buyer Under Contract/),'listed / in escrow')}
+     ${kc('Sold',sold,'closed')}
+     ${kc('Total cost basis',moneyK(cost),'committed dev cost')}
+     ${kc('Pending CO exposure',moneyK(sum(x=>x.f.pendCO)),'not in profit yet')}
+   </div>
+   <div class="card"><h3>Top risk projects</h3>
+     ${atRisk.length?`<table><thead><tr><th>Home</th><th>Stage</th><th class="num">Margin</th><th class="num">Profit</th><th>Risk</th></tr></thead><tbody>
+     ${atRisk.map(x=>`<tr onclick="go('home','${x.h.id}')" style="cursor:pointer"><td><b>${x.h.name}</b></td><td>${stageOf(x.h)}</td><td class="num">${pct(x.f.margin)}</td><td class="num">${moneyK(x.f.projectedProfit)}</td><td>${riskPill(x.f.riskStatus, x.f.alerts)}</td></tr>`).join('')}
+     </tbody></table>`:'<p class="muted">No projects flagged. Portfolio looks healthy.</p>'}
+   </div>`;
+}
+
+/* ---- MARGIN WATCH ---- */
+function renderMarginWatch(s){
+  setCrumbs([{label:'Home',view:'hub'},{label:'Margin Watch'}]);
+  let rows=[]; HOMES.forEach(h=>{const f=calcFin(h);f.alerts.forEach(a=>rows.push({h,a}));});
+  rows.sort((x,y)=>SEV[x.a.sev]-SEV[y.a.sev]);
+  s.innerHTML=`
+   <button class="back-link" onclick="go('hub')">${svg('<path d="M15 18l-6-6 6-6"/>')} Back</button>
+   <div class="panel-head"><div><h2>Margin Watch</h2><p>Every open risk across the portfolio, most severe first.</p></div></div>
+   <div class="card">
+     ${rows.length?`<table><thead><tr><th>Severity</th><th>Home</th><th>Alert</th><th class="num">Impact</th></tr></thead><tbody>
+     ${rows.map(r=>`<tr onclick="go('home','${r.h.id}')" style="cursor:pointer"><td>${sevPill(r.a.sev)}</td><td><b>${r.h.name}</b></td><td>${r.a.msg}</td><td class="num">${r.a.impact?money(r.a.impact):''}</td></tr>`).join('')}
+     </tbody></table>`:'<p class="muted">No alerts — every deal is healthy.</p>'}
+   </div>`;
+}
+
+/* =================== FEEDBACK / COMMENT =================== */
+function toast(msg){let t=document.getElementById('lgToast');if(!t){t=document.createElement('div');t.id='lgToast';t.style.cssText='position:fixed;bottom:84px;right:24px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;z-index:90;box-shadow:var(--shadow-lg);opacity:0;transition:opacity .2s';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';},2800);}
+function openFeedback(){
+  openModal('Send a comment',
+    `<p class="muted" style="margin:0 0 12px;font-size:13px">Goes straight to Alex (alex.toler@tolercorp.com).</p>
+     <textarea id="fb_msg" class="input" style="width:100%;min-height:130px;resize:vertical" placeholder="What's working, what's confusing, what you'd like changed..."></textarea>`,
+    async()=>{
+      const msg=(document.getElementById('fb_msg').value||'').trim(); if(!msg) return;
+      const page=(typeof CRUMB!=='undefined'&&CRUMB.length)?CRUMB[CRUMB.length-1].label:'';
+      const user=(SESSION&&SESSION.email)||'anon';
+      try{ const r=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,page,user})}); const d=await r.json(); closeModal(); toast(d.ok?'Thanks — your comment was sent.':'Could not send. Please try again.'); }
+      catch(e){ closeModal(); toast('Server not reachable.'); }
+    },'Send');
+}
+
+function changeStage(id,stage){ return (async()=>{ try{ const r=await post('/api/homes/stage',{id,stage},'PATCH'); if(r&&r.ok){ await loadHomesData(); renderHome(document.getElementById('stage'),id); } else { alert('Could not change stage.'); } }catch(e){ alert('Server not reachable.'); } })(); }
+</script>
+</body>
+</html>

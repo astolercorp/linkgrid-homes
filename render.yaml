@@ -1,0 +1,26 @@
+# Render blueprint — deploys LinkGrid Homes at app.tolercorp.com
+# 1. Push this folder to a GitHub repo.
+# 2. In Render: New > Blueprint > pick the repo. It reads this file.
+# 3. Add a custom domain (app.tolercorp.com) and set the env vars marked below.
+services:
+  - type: web
+    name: linkgrid-homes
+    runtime: node
+    plan: starter            # cheapest plan that supports a persistent disk
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: NODE_VERSION
+        value: "20"
+      # Set these in the Render dashboard (never commit secrets):
+      # - key: GOOGLE_CLIENT_ID
+      # - key: GOOGLE_CLIENT_SECRET
+      # - key: GOOGLE_REDIRECT
+      #   value: https://app.tolercorp.com/auth/google/callback
+      # - key: ANTHROPIC_API_KEY
+    disk:
+      name: linkgrid-data
+      mountPath: /var/data   # users.json + homes.json persist here across deploys
+      sizeGB: 1

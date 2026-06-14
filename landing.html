@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>A. S. Toler Corp. — Client Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+<style>
+:root{--bg:#FAF9F5;--panel:#FFFFFF;--panel2:#F5F4ED;--border:#E6E2D6;--ink:#2A2722;--ink-2:#4D4738;--ink-3:#7A7460;--accent:#C96342;--accent-2:#A84F31;--accent-bg:rgba(201,99,66,.08);--accent-line:rgba(201,99,66,.30);--shadow-lg:0 12px 40px rgba(42,39,34,.10);--font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);min-height:100vh;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% -20%,var(--panel2) 0%,var(--bg) 60%);z-index:0;pointer-events:none;}
+.wrap{position:relative;z-index:1;}
+nav{max-width:1080px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;gap:14px;}
+.mark{width:40px;height:40px;border-radius:11px;background:var(--accent-bg);border:1px solid var(--accent-line);color:var(--accent);display:flex;align-items:center;justify-content:center;}
+.mark svg{width:23px;height:23px;}
+.brand{font-weight:800;font-size:16px;line-height:1.1;}
+.brand small{display:block;font-size:11px;color:var(--ink-3);font-weight:500;}
+.spacer{flex:1;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;border:1px solid var(--accent-2);background:var(--accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;}
+.btn:hover{filter:brightness(1.05);}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--border);}
+.btn-ghost:hover{background:var(--panel2);}
+.hero{max-width:1080px;margin:0 auto;padding:70px 24px 40px;}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.hero h1{font-size:46px;line-height:1.05;letter-spacing:-.02em;font-weight:800;margin:14px 0 18px;max-width:760px;}
+.hero p{font-size:18px;color:var(--ink-2);max-width:620px;line-height:1.55;}
+.cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap;}
+.cards{max-width:1080px;margin:50px auto 0;padding:0 24px 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(42,39,34,.05);}
+.card h3{font-size:16px;margin-bottom:8px;}
+.card p{font-size:13.5px;color:var(--ink-3);line-height:1.5;}
+.foot{max-width:1080px;margin:0 auto;padding:24px;color:var(--ink-3);font-size:12px;border-top:1px solid var(--border);}
+.modal-back{position:fixed;inset:0;background:rgba(42,39,34,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;}
+.modal-back.show{display:flex;}
+.modal{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);max-width:420px;width:100%;padding:26px;text-align:center;}
+.modal h3{font-size:18px;margin-bottom:10px;}
+.modal p{font-size:13.5px;color:var(--ink-3);line-height:1.55;margin-bottom:18px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+    <div class="brand">A. S. Toler Corp.<small>Bay Area Construction &amp; Development</small></div>
+    <div class="spacer"></div>
+    <a class="btn" href="/" onclick="return goLogin(event)">Client &amp; Team Login</a>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">Client &amp; Team Portal</div>
+    <h1>One login for every A. S. Toler workspace.</h1>
+    <p>Sign in once and choose your workspace. Your account only sees the apps you have access to — from the Toler Corp portal to LinkGrid Homes development management.</p>
+    <div class="cta">
+      <a class="btn" href="/" onclick="return goLogin(event)">Log in</a>
+      <a class="btn btn-ghost" href="#apps">Explore the apps</a>
+    </div>
+  </section>
+
+  <section class="cards" id="apps">
+    <div class="card"><h3>Toler Corp App</h3><p>The internal portal for bids, projects, accounting, field operations, and compliance.</p></div>
+    <div class="card"><h3>LinkGrid Homes</h3><p>The operating system for spec-home development — acquisition, budget, build, listing, and live profit per home.</p></div>
+    <div class="card"><h3>Secure by workspace</h3><p>Access is granted per workspace. Owners manage their own team; nobody sees data outside their workspace.</p></div>
+  </section>
+
+  <div class="foot">© A. S. Toler Corp. · Build with confidence. Manage with discipline.</div>
+</div>
+
+<div class="modal-back" id="m">
+  <div class="modal">
+    <div class="mark" style="margin:0 auto 14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+    <h3>Taking you to sign in</h3>
+    <p>You'll log in with your email or Google, then pick your workspace. This is the same entry point the tolercorp.com "Login" button would use in production.</p>
+    <a class="btn" href="/" style="width:100%;justify-content:center">Continue to login</a>
+  </div>
+</div>
+
+<script>
+// In production, the tolercorp.com "Login" link points straight to the unified
+// login (e.g. https://app.tolercorp.com). Locally it goes to "/", which serves
+// the LinkGrid login -> workspace picker. The modal just explains the hop.
+function goLogin(e){ e.preventDefault(); document.getElementById('m').classList.add('show'); return false; }
+document.getElementById('m').addEventListener('click',function(ev){ if(ev.target===this) this.classList.remove('show'); });
+</script>
+</body>
+</html>
